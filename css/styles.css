@@ -1,0 +1,59 @@
+/* Animaciones y estilos personalizados sobre Tailwind */
+:root {
+    --color-na: #3b82f6; /* Azul para el Sodio */
+    --color-cl: #10b981; /* Verde para el Cloro */
+}
+
+/* Animaciones */
+@keyframes electron-transfer {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(250px, 0); } /* Será calculado vía JS */
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5)); }
+    50% { filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.8)); }
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+    100% { transform: rotate(-360deg); }
+}
+
+.spin-slow {
+    animation: spin 15s linear infinite;
+}
+
+.spin-slow-reverse {
+    animation: spin-reverse 20s linear infinite;
+}
+
+/* Transiciones de UI */
+.fade-enter {
+    opacity: 0;
+    transform: translateY(10px);
+}
+.fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+.fade-exit {
+    opacity: 1;
+}
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+/* Canvas de Three.js */
+#webgl-container canvas {
+    outline: none;
+}
