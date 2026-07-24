@@ -21,17 +21,9 @@
         }
     </script>
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Three.js desde CDN -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
+
 </head>
-<body class="bg-dark text-slate-200 min-h-screen font-sans antialiased overflow-hidden">
+<body class="bg-dark text-slate-200 min-h-screen font-sans antialiased overflow-x-hidden overflow-y-auto">
     <!-- Barra de navegación -->
     <nav class="border-b border-slate-700 bg-slate-900/50 backdrop-blur-sm p-4 flex justify-between items-center fixed top-0 w-full z-50">
         <h1 class="text-xl font-bold flex items-center gap-2">
@@ -44,48 +36,48 @@
     </nav>
 
     <!-- Contenedor Principal -->
-    <main id="main-container" class="pt-20 px-4 pb-8 max-w-6xl mx-auto h-screen flex flex-col">
+    <main id="main-container" class="pt-20 px-4 pb-8 max-w-6xl mx-auto min-h-screen flex flex-col">
         
         <!-- Dashboard / Menú -->
         <div id="view-dashboard" class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 flex-1">
-            <!-- Tarjeta 1 -->
-            <div class="bg-card p-6 rounded-xl border border-slate-700 shadow-lg hover:border-primary transition-colors flex flex-col">
+            <!-- Tarjeta 1: NaCl -->
+            <div class="bg-card p-6 rounded-xl border border-slate-700 shadow-lg hover:border-blue-500 transition-colors flex flex-col">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="bg-blue-900/50 text-blue-400 p-2 rounded-lg text-xl font-bold w-10 h-10 flex items-center justify-center">1</div>
-                    <h2 class="text-xl font-semibold">Transferencia de Electrones</h2>
+                    <h2 class="text-xl font-semibold">Enlace Iónico en NaCl</h2>
                 </div>
-                <p class="text-slate-400 mb-6 flex-1">Observa cómo el sodio transfiere su único electrón de valencia al cloro utilizando el modelo atómico de Bohr.</p>
-                <button id="btn-mod-1" class="w-full py-3 bg-primary hover:bg-blue-600 text-white rounded-lg font-medium transition-colors">Abrir Simulación</button>
+                <p class="text-slate-400 mb-6 flex-1">Simula el proceso de transferencia de 1 electrón del Sodio al Cloro, formación de iones, atracción electrostática y red cristalina cúbica.</p>
+                <button id="btn-mod-1" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors">Abrir Simulación NaCl</button>
             </div>
             
-            <!-- Tarjeta 2 -->
-            <div class="bg-card p-6 rounded-xl border border-slate-700 shadow-lg hover:border-primary transition-colors flex flex-col">
+            <!-- Tarjeta 2: MgO -->
+            <div class="bg-card p-6 rounded-xl border border-slate-700 shadow-lg hover:border-orange-500 transition-colors flex flex-col">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-purple-900/50 text-purple-400 p-2 rounded-lg text-xl font-bold w-10 h-10 flex items-center justify-center">2</div>
-                    <h2 class="text-xl font-semibold">Formación de Iones</h2>
+                    <div class="bg-orange-900/50 text-orange-400 p-2 rounded-lg text-xl font-bold w-10 h-10 flex items-center justify-center">2</div>
+                    <h2 class="text-xl font-semibold">Enlace Iónico en MgO (Óxido de Magnesio)</h2>
                 </div>
-                <p class="text-slate-400 mb-6 flex-1">Analiza los cambios en el radio atómico cuando se forman el catión Na⁺ y el anión Cl⁻ tras la transferencia.</p>
-                <button id="btn-mod-2" class="w-full py-3 bg-primary hover:bg-blue-600 text-white rounded-lg font-medium transition-colors">Abrir Simulación</button>
+                <p class="text-slate-400 mb-6 flex-1">Simula el proceso completo para el MgO: transferencia de 2 e- del Mg (2,8,2) al O (2,6), formación del catión Mg²⁺ y anión O²⁻, interacción electrostática fuerte (+2/-2) y red cristalina cúbica.</p>
+                <button id="btn-mod-2" class="w-full py-3 bg-orange-600 hover:bg-orange-500 text-white rounded-lg font-medium transition-colors">Abrir Simulación MgO</button>
             </div>
 
-            <!-- Tarjeta 3 -->
-            <div class="bg-card p-6 rounded-xl border border-slate-700 shadow-lg hover:border-primary transition-colors flex flex-col">
+            <!-- Tarjeta 3: AlF3 -->
+            <div class="bg-card p-6 rounded-xl border border-slate-700 shadow-lg hover:border-purple-500 transition-colors flex flex-col">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-orange-900/50 text-orange-400 p-2 rounded-lg text-xl font-bold w-10 h-10 flex items-center justify-center">3</div>
-                    <h2 class="text-xl font-semibold">Atracción y Repulsión</h2>
+                    <div class="bg-purple-900/50 text-purple-400 p-2 rounded-lg text-xl font-bold w-10 h-10 flex items-center justify-center">3</div>
+                    <h2 class="text-xl font-semibold">Enlace Iónico en AlF₃ (Trifluoruro de Aluminio)</h2>
                 </div>
-                <p class="text-slate-400 mb-6 flex-1">Experimenta con las fuerzas electrostáticas. Observa cómo las cargas opuestas se atraen y las iguales se repelen.</p>
-                <button id="btn-mod-3" class="w-full py-3 bg-primary hover:bg-blue-600 text-white rounded-lg font-medium transition-colors">Abrir Simulación</button>
+                <p class="text-slate-400 mb-6 flex-1">Explora la relación estequiométrica 1:3. Observa cómo el Al (2,8,3) cede 3 e- repartidos a 3 átomos independientes de F (2,7), formando Al³⁺ y 3 F⁻ con coordinación octaédrica.</p>
+                <button id="btn-mod-3" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-medium transition-colors">Abrir Simulación AlF₃</button>
             </div>
 
-            <!-- Tarjeta 4 -->
-            <div class="bg-card p-6 rounded-xl border border-slate-700 shadow-lg hover:border-primary transition-colors flex flex-col">
+            <!-- Tarjeta 4: KBr -->
+            <div class="bg-card p-6 rounded-xl border border-slate-700 shadow-lg hover:border-yellow-500 transition-colors flex flex-col">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-green-900/50 text-green-400 p-2 rounded-lg text-xl font-bold w-10 h-10 flex items-center justify-center">4</div>
-                    <h2 class="text-xl font-semibold">Red Iónica 3D</h2>
+                    <div class="bg-yellow-900/50 text-yellow-400 p-2 rounded-lg text-xl font-bold w-10 h-10 flex items-center justify-center">4</div>
+                    <h2 class="text-xl font-semibold">Enlace Iónico en KBr (Bromuro de Potasio)</h2>
                 </div>
-                <p class="text-slate-400 mb-6 flex-1">Explora la estructura cristalina tridimensional del cloruro de sodio y cómo los iones se alternan en el espacio.</p>
-                <button id="btn-mod-4" class="w-full py-3 bg-primary hover:bg-blue-600 text-white rounded-lg font-medium transition-colors">Abrir Simulación</button>
+                <p class="text-slate-400 mb-6 flex-1">Analiza el enlace entre elementos de periodos superiores (K: n₄=1, Br: n₄=7). Observa la transferencia a n₄, isoconfiguración con Argón/Criptón y red FCC.</p>
+                <button id="btn-mod-4" class="w-full py-3 bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg font-medium transition-colors shadow-sm text-slate-900">Abrir Simulación KBr</button>
             </div>
         </div>
 
@@ -93,17 +85,51 @@
         <div id="view-simulation" class="hidden flex-col h-full relative flex-1 pb-16">
             
             <!-- Texto de Contexto -->
-            <div id="sim-info" class="absolute top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-3/4 bg-slate-800/80 backdrop-blur-md p-4 rounded-xl border border-slate-600 text-center z-10 transition-opacity">
+            <div id="sim-info" class="w-full md:w-3/4 self-center shrink-0 bg-slate-800/80 backdrop-blur-md p-4 rounded-xl border border-slate-600 text-center z-10 transition-opacity mb-4">
                 <h2 id="sim-title" class="text-lg font-bold text-white mb-1">Título</h2>
                 <p id="sim-desc" class="text-sm text-slate-300">Descripción...</p>
             </div>
 
             <!-- Área de Renderizado (SVG / Canvas) -->
-            <div id="render-area" class="flex-1 w-full flex items-center justify-center relative mt-16 bg-slate-900/30 rounded-2xl border border-slate-800 overflow-hidden">
+            <div id="render-area" class="flex-1 w-full min-h-[400px] md:min-h-[500px] flex items-center justify-center relative bg-slate-900/30 rounded-2xl border border-slate-800 overflow-hidden">
                 <!-- Área SVG de Módulos 1 y 2 -->
                 <svg id="svg-layer" class="w-full h-full absolute inset-0 hidden" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
                     <!-- Definiciones -->
                     <defs>
+                        <!-- Gradientes para los núcleos de todos los módulos -->
+                        <linearGradient id="grad-na" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#60a5fa" />
+                            <stop offset="100%" stop-color="#1e40af" />
+                        </linearGradient>
+                        <linearGradient id="grad-cl" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#4ade80" />
+                            <stop offset="100%" stop-color="#166534" />
+                        </linearGradient>
+                        <linearGradient id="grad-mg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fb923c" />
+                            <stop offset="100%" stop-color="#9a3412" />
+                        </linearGradient>
+                        <linearGradient id="grad-o" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f87171" />
+                            <stop offset="100%" stop-color="#991b1b" />
+                        </linearGradient>
+                        <linearGradient id="grad-al" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#c084fc" />
+                            <stop offset="100%" stop-color="#6b21a8" />
+                        </linearGradient>
+                        <linearGradient id="grad-f" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#22d3ee" />
+                            <stop offset="100%" stop-color="#155e75" />
+                        </linearGradient>
+                        <linearGradient id="grad-k" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#facc15" />
+                            <stop offset="100%" stop-color="#854d0e" />
+                        </linearGradient>
+                        <linearGradient id="grad-br" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#2dd4bf" />
+                            <stop offset="100%" stop-color="#115e59" />
+                        </linearGradient>
+
                         <!-- Filtros de resplandor -->
                         <filter id="glow-na" x="-20%" y="-20%" width="140%" height="140%">
                             <feGaussianBlur stdDeviation="5" result="blur" />
@@ -115,7 +141,7 @@
 
                 <!-- Área de Fuerzas del Módulo 3 -->
                 <div id="forces-layer" class="w-full h-full absolute inset-0 hidden flex items-center justify-center overflow-hidden">
-                    <div id="forces-container" class="relative w-full max-w-2xl h-64 md:h-80 flex items-center justify-center">
+                    <div id="forces-container" class="relative flex-shrink-0 flex items-center justify-center transition-transform">
                         <!-- Los iones serán inyectados aquí vía JS -->
                     </div>
                 </div>
@@ -149,899 +175,72 @@
             </div>
 
             <!-- Controles (Inferior) -->
-            <div id="sim-controls" class="fixed bottom-0 left-0 w-full bg-slate-900/90 border-t border-slate-700 p-4 flex justify-center items-center gap-4 z-20">
-                <button id="btn-prev" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-50 transition-colors" title="Anterior">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><path d="m15 18-6-6 6-6"/></svg>
-                </button>
+            <div id="sim-controls" class="fixed bottom-0 left-0 w-full bg-slate-900/90 border-t border-slate-700 p-2 md:p-4 flex flex-col md:flex-row justify-center items-center gap-2 md:gap-4 z-20">
                 
-                <!-- Controles extras para el Módulo 3 -->
-                <div id="mod3-controls" class="hidden flex flex-col md:flex-row bg-slate-800 rounded-lg overflow-hidden border border-slate-700 md:mr-4">
-                    <button id="btn-case-attract" class="px-4 py-2 text-sm bg-primary/20 text-blue-300 hover:bg-primary/30 font-medium transition-colors">Na⁺ y Cl⁻</button>
-                    <button id="btn-case-repel-na" class="px-4 py-2 text-sm text-slate-400 hover:bg-slate-700 font-medium border-l border-slate-700 transition-colors">Na⁺ y Na⁺</button>
-                    <button id="btn-case-repel-cl" class="px-4 py-2 text-sm text-slate-400 hover:bg-slate-700 font-medium border-l border-slate-700 transition-colors">Cl⁻ y Cl⁻</button>
+                <!-- Controles extras para el Módulo 3 (Fila superior en móvil) -->
+                <div id="mod3-controls" class="hidden flex flex-row bg-slate-800 rounded-lg overflow-hidden border border-slate-700 md:mr-4 w-full md:w-auto justify-center">
+                    <button id="btn-case-attract" class="flex-1 md:flex-none px-2 md:px-4 py-2 text-xs md:text-sm bg-primary/20 text-blue-300 hover:bg-primary/30 font-medium transition-colors whitespace-nowrap">Na⁺ y Cl⁻</button>
+                    <button id="btn-case-repel-na" class="flex-1 md:flex-none px-2 md:px-4 py-2 text-xs md:text-sm text-slate-400 hover:bg-slate-700 font-medium border-l border-slate-700 transition-colors whitespace-nowrap">Na⁺ y Na⁺</button>
+                    <button id="btn-case-repel-cl" class="flex-1 md:flex-none px-2 md:px-4 py-2 text-xs md:text-sm text-slate-400 hover:bg-slate-700 font-medium border-l border-slate-700 transition-colors whitespace-nowrap">Cl⁻ y Cl⁻</button>
                 </div>
 
-                <button id="btn-play" class="flex items-center justify-center gap-2 px-4 md:px-6 py-2 bg-primary hover:bg-blue-600 rounded-lg font-medium transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" class="text-white" id="icon-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" class="text-white hidden" id="icon-pause"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                    <span id="btn-play-text" class="hidden md:inline">Reproducir</span>
-                </button>
-                <button id="btn-reset" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors" title="Reiniciar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                </button>
+                <!-- Controles de reproducción (Fila inferior en móvil) -->
+                <div class="flex flex-row justify-center items-center gap-2 md:gap-4">
+                    <button id="btn-prev" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-50 transition-colors" title="Anterior">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                    
+                    <button id="btn-play" class="flex items-center justify-center gap-2 px-6 py-2 bg-primary hover:bg-blue-600 rounded-lg font-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" class="text-white" id="icon-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" class="text-white hidden" id="icon-pause"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                        <span id="btn-play-text" class="hidden md:inline">Reproducir</span>
+                    </button>
+                    
+                    <button id="btn-reset" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors" title="Reiniciar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    </button>
 
-                <button id="btn-next" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-50 transition-colors" title="Siguiente">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><path d="m9 18 6-6-6-6"/></svg>
-                </button>
+                    <button id="btn-next" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-50 transition-colors" title="Siguiente">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- Lógica Principal y Módulos Empaquetados (In-line para soportar archivo local file://) -->
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    <!-- Utilidades Compartidas -->
+    <script src="js/utils/bohr.js"></script>
+    <script src="js/utils/3d-lattice.js"></script>
 
-        // ==========================================
-        // js/utils/bohr.js
-        // ==========================================
-        function generateAtomSVG({ symbol, shells, x, y, color, idPrefix, showCharge, charge, showBrackets, showLabels, startBracketsVisible }) {
-            const coreRadius = 25;
-            const shellSpacing = 20;
-            let svg = '';
-            // Crear el núcleo
-            svg += `<g id="${idPrefix}-atom" transform="translate(${x}, ${y})">`;
-            svg += `<circle r="${coreRadius}" fill="url(#grad-${symbol.toLowerCase()})" class="nucleus" />`;
-            // Texto del símbolo central
-            const textY = (showCharge && !showBrackets) ? -2 : 5;
-            svg += `<text x="0" y="${textY}" fill="white" font-weight="bold" text-anchor="middle" font-size="16">${symbol}</text>`;
-            
-            // Etiqueta de carga interior (si no hay corchetes)
-            if (showCharge && charge !== 0 && !showBrackets) {
-                const chargeStr = charge > 0 ? '⁺' : '⁻';
-                svg += `<text x="14" y="-8" fill="white" font-weight="bold" font-size="14">${chargeStr}</text>`;
-            }
+    <!-- Módulo 1: NaCl -->
+    <script src="js/modulo1/submodulos/transferencia-electrones.js"></script>
+    <script src="js/modulo1/submodulos/formacion-iones.js"></script>
+    <script src="js/modulo1/submodulos/atraccion-repulsion.js"></script>
+    <script src="js/modulo1/submodulos/red-ionica-3d.js"></script>
+    <script src="js/modulo1/index.js"></script>
 
-            // Corchetes y carga exterior
-            if (showBrackets) {
-                const maxRadius = coreRadius + (shells.length) * shellSpacing + 10;
-                const bOpacity = startBracketsVisible ? '1' : '0';
-                // Path izquierdo
-                svg += `<path d="M ${-maxRadius+10} ${-maxRadius-10} L ${-maxRadius} ${-maxRadius-10} L ${-maxRadius} ${maxRadius+10} L ${-maxRadius+10} ${maxRadius+10}" fill="none" stroke="white" stroke-width="2" opacity="${bOpacity}" class="bracket-elem" />`;
-                // Path derecho
-                svg += `<path d="M ${maxRadius-10} ${-maxRadius-10} L ${maxRadius} ${-maxRadius-10} L ${maxRadius} ${maxRadius+10} L ${maxRadius-10} ${maxRadius+10}" fill="none" stroke="white" stroke-width="2" opacity="${bOpacity}" class="bracket-elem" />`;
-                
-                // Carga fuera del corchete
-                const chargeStr = charge > 0 ? '+' : '-';
-                const chargeX = charge > 0 ? -maxRadius - 20 : maxRadius + 15;
-                svg += `<text x="${chargeX}" y="${-maxRadius}" fill="red" font-weight="bold" font-size="28" opacity="${bOpacity}" class="bracket-elem">${chargeStr}</text>`;
-            }
+    <!-- Módulo 2: MgO -->
+    <script src="js/modulo2/submodulos/transferencia-mgo.js"></script>
+    <script src="js/modulo2/submodulos/formacion-mgo.js"></script>
+    <script src="js/modulo2/submodulos/atraccion-mgo.js"></script>
+    <script src="js/modulo2/submodulos/red-ionica-mgo.js"></script>
+    <script src="js/modulo2/index.js"></script>
 
-            // Etiqueta de texto (Átomo vs Ion)
-            if (showLabels) {
-                const maxRadius = coreRadius + (shells.length) * shellSpacing + 10;
-                const labelY = showBrackets ? -maxRadius - 30 : -maxRadius - 20;
-                const labelText = charge !== 0 && showCharge ? `Ion ${symbol === 'Na' ? 'Sodio ⁺' : 'Cloro ⁻'}` : `Átomo de ${symbol === 'Na' ? 'Sodio' : 'Cloro'}`;
-                svg += `<text id="${idPrefix}-label" x="0" y="${labelY}" fill="#94a3b8" font-weight="600" text-anchor="middle" font-size="14" style="transition: opacity 0.5s;">${labelText}</text>`;
-            }
+    <!-- Módulo 3: AlF3 -->
+    <script src="js/modulo3/submodulos/transferencia-alf3.js"></script>
+    <script src="js/modulo3/submodulos/formacion-alf3.js"></script>
+    <script src="js/modulo3/submodulos/atraccion-alf3.js"></script>
+    <script src="js/modulo3/submodulos/red-ionica-alf3.js"></script>
+    <script src="js/modulo3/index.js"></script>
 
-            // Dibujar capas y electrones
-            shells.forEach((electronCount, shellIndex) => {
-                const radius = coreRadius + (shellIndex + 1) * shellSpacing;
-                const shellId = `${idPrefix}-shell-${shellIndex}`;
-                // Círculo de la capa
-                svg += `<circle id="${shellId}" r="${radius}" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5" />`;
-                // Electrones
-                const isClValence = (symbol === 'Cl' && shellIndex === 2);
-                const divisor = isClValence ? 8 : electronCount;
-                const angleStep = (2 * Math.PI) / divisor;
-                
-                // SIEMPRE iniciamos en 0 para dibujar todos los nodos, pero hacemos transparente el hueco del Cloro
-                const startI = 0;
-                const endI = isClValence ? 8 : electronCount;
-                
-                // TODAS las capas rotan
-                const groupClass = (shellIndex % 2 === 0 ? 'spin-slow' : 'spin-slow-reverse');
-                
-                svg += `<g class="${groupClass}" style="transform-origin: 0px 0px;">`;
-                for (let i = startI; i < endI; i++) {
-                    const angle = i * angleStep - Math.PI / 2; // Iniciar desde arriba
-                    const ex = radius * Math.cos(angle);
-                    const ey = radius * Math.sin(angle);
-                    const electronId = `${idPrefix}-electron-${shellIndex}-${i}`;
-                    
-                    // Definir color del electrón: Sodio es Amarillo, Cloro es Verde.
-                    let elColor = '#fcd34d'; // Amarillo (Na)
-                    let elStroke = '#d97706';
-                    let opacity = '1';
-                    
-                    if (symbol === 'Cl') {
-                        elColor = '#4ade80'; // Verde (Cl)
-                        elStroke = '#16a34a';
-                    }
-                    
-                    // EXCEPCIÓN: Si estamos dibujando la valencia del Cloro
-                    if (isClValence && i === 0) {
-                        elColor = '#fcd34d'; // El electrón que rellena el hueco viene del Sodio
-                        elStroke = '#d97706';
-                        // Si es el átomo neutro (7 electrones), el hueco empieza transparente
-                        if (electronCount === 7) {
-                            opacity = '0';
-                        }
-                    }
-                    
-                    svg += `<circle id="${electronId}" cx="${ex}" cy="${ey}" r="4" fill="${elColor}" stroke="${elStroke}" stroke-width="1" opacity="${opacity}" style="transition: opacity 0.5s ease-in-out;" />`;
-                }
-                svg += `</g>`;
-            });
-            svg += `</g>`;
-            return svg;
-        }
+    <!-- Módulo 4: KBr -->
+    <script src="js/modulo4/submodulos/transferencia-kbr.js"></script>
+    <script src="js/modulo4/submodulos/formacion-kbr.js"></script>
+    <script src="js/modulo4/submodulos/atraccion-kbr.js"></script>
+    <script src="js/modulo4/submodulos/red-ionica-kbr.js"></script>
+    <script src="js/modulo4/index.js"></script>
 
-        function drawArrow(id, x1, y1, x2, y2, color = 'white', dashed = false) {
-            const dash = dashed ? 'stroke-dasharray="5,5"' : '';
-            // Marcador de punta de flecha
-            let defs = `
-            <defs>
-                <marker id="arrow-${id}" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="${color}" />
-                </marker>
-            </defs>`;
-            return `${defs}<line id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="2" marker-end="url(#arrow-${id})" ${dash} />`;
-        }
-
-        // ==========================================
-        // js/modules/module1.js
-        // ==========================================
-        function renderModule1() {
-            const svgLayer = document.getElementById('svg-content');
-            // Na: 2, 8, 1
-            const naSVG = generateAtomSVG({
-                symbol: 'Na',
-                shells: [2, 8, 1],
-                x: 300,
-                y: 300,
-                color: '#3b82f6',
-                idPrefix: 'mod1-na',
-                showLabels: true
-            });
-            // Cl: 2, 8, 7
-            const clSVG = generateAtomSVG({
-                symbol: 'Cl',
-                shells: [2, 8, 7],
-                x: 700,
-                y: 300,
-                color: '#10b981',
-                idPrefix: 'mod1-cl',
-                showLabels: true
-            });
-            // Una flecha para mostrar la ruta de transferencia (inicialmente tenue)
-            const arrow = drawArrow('mod1-arrow', 380, 220, 620, 220, 'rgba(255,255,255,0.3)', true);
-            svgLayer.innerHTML = arrow + naSVG + clSVG;
-        }
-
-        function playModule1() {
-            // NODO A: Ocultar electrón de valencia original del Sodio
-            const valenceNa = document.getElementById('mod1-na-electron-2-0');
-            if (valenceNa) valenceNa.style.opacity = '0';
-            
-            // Crear electrón de transferencia temporal
-            const tempElectron = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            tempElectron.setAttribute('cx', '380');
-            tempElectron.setAttribute('cy', '300');
-            tempElectron.setAttribute('r', '4');
-            tempElectron.setAttribute('fill', '#fcd34d');
-            tempElectron.setAttribute('stroke', '#d97706');
-            tempElectron.classList.add('animate-pulse-glow');
-            tempElectron.style.transition = 'all 1.5s ease-in-out';
-            tempElectron.style.transform = 'translateX(0px)';
-            tempElectron.style.opacity = '0'; // inicia invisible
-            document.getElementById('svg-content').appendChild(tempElectron);
-            
-            // Iniciar movimiento del electrón temporal
-            setTimeout(() => {
-                tempElectron.style.opacity = '1';
-                tempElectron.style.transform = 'translateX(240px)'; // 380 -> 620
-            }, 50);
-
-            // Desvanecer electrón temporal al llegar
-            setTimeout(() => {
-                tempElectron.style.opacity = '0';
-            }, 1500);
-
-            // NODO B: Mostrar electrón en el hueco del Cloro y actualizar textos
-            window.currentAnimationTimeout = setTimeout(() => {
-                if (tempElectron.parentNode) tempElectron.remove();
-                
-                const valenceCl = document.getElementById('mod1-cl-electron-2-0');
-                if (valenceCl) valenceCl.style.opacity = '1';
-                
-                const labelNa = document.getElementById('mod1-na-label');
-                if (labelNa) labelNa.textContent = 'Ion Sodio ⁺';
-                
-                const labelCl = document.getElementById('mod1-cl-label');
-                if (labelCl) labelCl.textContent = 'Ion Cloro ⁻';
-                
-                if(window.app && window.app.currentModule === 1) {
-                    window.app.setPlayState(false);
-                }
-            }, 2000);
-        }
-
-        function resetModule1() {
-            const valenceNa = document.getElementById('mod1-na-electron-2-0');
-            if (valenceNa) valenceNa.style.opacity = '1';
-            
-            const valenceCl = document.getElementById('mod1-cl-electron-2-0');
-            if (valenceCl) valenceCl.style.opacity = '0';
-            
-            const labelNa = document.getElementById('mod1-na-label');
-            if (labelNa) labelNa.textContent = 'Átomo de Sodio';
-            
-            const labelCl = document.getElementById('mod1-cl-label');
-            if (labelCl) labelCl.textContent = 'Átomo de Cloro';
-        }
-
-        // ==========================================
-        // js/modules/module2.js
-        // ==========================================
-        function renderModule2() {
-            const svgLayer = document.getElementById('svg-content');
-            // Grupo para el Sodio
-            let naGroup = `<g id="mod2-na-container" style="transition: all 1.5s ease-in-out; transform-origin: 300px 300px;">`;
-            // Ion Na+ (visible desde el inicio)
-            naGroup += `<g id="mod2-na-ion">` + generateAtomSVG({ symbol: 'Na', shells: [2, 8], x: 300, y: 300, color: '#3b82f6', idPrefix: 'm2-nap', showCharge: true, charge: 1, showBrackets: true, showLabels: true, startBracketsVisible: true }) + `</g>`;
-            naGroup += `</g>`;
-            // Grupo para el Cloro
-            let clGroup = `<g id="mod2-cl-container" style="transition: all 1.5s ease-in-out; transform-origin: 700px 300px;">`;
-            // Ion Cl- (visible desde el inicio)
-            clGroup += `<g id="mod2-cl-ion">` + generateAtomSVG({ symbol: 'Cl', shells: [2, 8, 8], x: 700, y: 300, color: '#10b981', idPrefix: 'm2-cln', showCharge: true, charge: -1, showBrackets: true, showLabels: true, startBracketsVisible: true }) + `</g>`;
-            clGroup += `</g>`;
-            
-            // Flechas de atracción
-            let arrowsGroup = `<g id="mod2-arrows" style="opacity: 0; transition: opacity 0.5s ease-in-out;">`;
-            arrowsGroup += drawArrow('m2-arr-left', 470, 300, 495, 300, 'white');
-            arrowsGroup += drawArrow('m2-arr-right', 530, 300, 505, 300, 'white');
-            arrowsGroup += `</g>`;
-            
-            svgLayer.innerHTML = naGroup + clGroup + arrowsGroup;
-        }
-
-        function playModule2() {
-            const naCont = document.getElementById('mod2-na-container');
-            const clCont = document.getElementById('mod2-cl-container');
-            
-            // Atracción y flechas (ya son iones formados, no se escalan)
-            naCont.style.transform = 'translateX(90px)';
-            clCont.style.transform = 'translateX(-70px)';
-            document.getElementById('mod2-arrows').style.opacity = '1';
-
-            window.currentAnimationTimeout = setTimeout(() => {
-                if(window.app && window.app.currentModule === 2) {
-                    window.app.setPlayState(false);
-                }
-            }, 1500);
-        }
-
-        function resetModule2() {
-            document.getElementById('mod2-na-container').style.transform = 'translateX(0)';
-            document.getElementById('mod2-cl-container').style.transform = 'translateX(0)';
-            if(document.getElementById('mod2-arrows')) {
-                document.getElementById('mod2-arrows').style.opacity = '0';
-            }
-        }
-
-        // ==========================================
-        // js/modules/module3.js
-        // ==========================================
-        function renderModule3() {
-            window.app.selectedCase = 'attract';
-            updateButtons();
-            buildForcesDOM();
-        }
-
-        function setupModule3Controls() {
-            document.getElementById('btn-case-attract').addEventListener('click', () => {
-                window.app.selectedCase = 'attract';
-                resetModule3();
-                updateButtons();
-                buildForcesDOM();
-            });
-            document.getElementById('btn-case-repel-na').addEventListener('click', () => {
-                window.app.selectedCase = 'repel-na';
-                resetModule3();
-                updateButtons();
-                buildForcesDOM();
-            });
-            document.getElementById('btn-case-repel-cl').addEventListener('click', () => {
-                window.app.selectedCase = 'repel-cl';
-                resetModule3();
-                updateButtons();
-                buildForcesDOM();
-            });
-        }
-
-        function updateButtons() {
-            const actClass = ['bg-primary/20', 'text-blue-300'];
-            const inactClass = ['text-slate-400'];
-            const b1 = document.getElementById('btn-case-attract');
-            const b2 = document.getElementById('btn-case-repel-na');
-            const b3 = document.getElementById('btn-case-repel-cl');
-            [b1, b2, b3].forEach(b => { b.classList.remove(...actClass); b.classList.add(...inactClass); });
-            if (window.app.selectedCase === 'attract') {
-                b1.classList.add(...actClass); b1.classList.remove(...inactClass);
-            } else if (window.app.selectedCase === 'repel-na') {
-                b2.classList.add(...actClass); b2.classList.remove(...inactClass);
-            } else {
-                b3.classList.add(...actClass); b3.classList.remove(...inactClass);
-            }
-        }
-
-        function getIonHTML(type) {
-            if (type === 'Na') {
-                return `<div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-blue-800 flex items-center justify-center shadow-lg border-2 border-blue-300 text-white font-bold text-2xl relative z-10">Na⁺</div>`;
-            } else {
-                return `<div class="w-32 h-32 rounded-full bg-gradient-to-br from-green-400 to-green-800 flex items-center justify-center shadow-lg border-2 border-green-300 text-white font-bold text-2xl relative z-10">Cl⁻</div>`;
-            }
-        }
-
-        function buildForcesDOM() {
-            const container = document.getElementById('forces-container');
-            let leftType, rightType;
-            if (window.app.selectedCase === 'attract') { leftType = 'Na'; rightType = 'Cl'; }
-            else if (window.app.selectedCase === 'repel-na') { leftType = 'Na'; rightType = 'Na'; }
-            else { leftType = 'Cl'; rightType = 'Cl'; }
-            
-            const isAttract = window.app.selectedCase === 'attract';
-            
-            // Si es atracción, las flechas están en el medio apuntando hacia adentro.
-            // Si es repulsión, las flechas están a los lados exteriores apuntando hacia afuera.
-            const leftArrowHTML = isAttract 
-                ? `<div id="mod3-arrow-left" class="absolute right-[-60px] opacity-0 transition-opacity duration-300">
-                        <svg width="50" height="20"><line x1="0" y1="10" x2="40" y2="10" stroke="white" stroke-width="3"/><polygon points="40,5 50,10 40,15" fill="white"/></svg>
-                   </div>`
-                : `<div id="mod3-arrow-left" class="absolute left-[-60px] opacity-0 transition-opacity duration-300 transform rotate-180">
-                        <svg width="50" height="20"><line x1="0" y1="10" x2="40" y2="10" stroke="white" stroke-width="3"/><polygon points="40,5 50,10 40,15" fill="white"/></svg>
-                   </div>`;
-                   
-            const rightArrowHTML = isAttract
-                ? `<div id="mod3-arrow-right" class="absolute left-[-60px] opacity-0 transition-opacity duration-300 transform rotate-180">
-                        <svg width="50" height="20"><line x1="0" y1="10" x2="40" y2="10" stroke="white" stroke-width="3"/><polygon points="40,5 50,10 40,15" fill="white"/></svg>
-                   </div>`
-                : `<div id="mod3-arrow-right" class="absolute right-[-60px] opacity-0 transition-opacity duration-300">
-                        <svg width="50" height="20"><line x1="0" y1="10" x2="40" y2="10" stroke="white" stroke-width="3"/><polygon points="40,5 50,10 40,15" fill="white"/></svg>
-                   </div>`;
-            
-            container.innerHTML = `
-                <div id="mod3-left" class="absolute left-1/4 -translate-x-1/2 flex items-center justify-center transition-transform duration-1000 ease-in-out">
-                    ${leftArrowHTML}
-                    ${getIonHTML(leftType)}
-                </div>
-                <div id="mod3-right" class="absolute right-1/4 translate-x-1/2 flex items-center justify-center transition-transform duration-1000 ease-in-out">
-                    ${getIonHTML(rightType)}
-                    ${rightArrowHTML}
-                </div>
-            `;
-        }
-
-        function playModule3() {
-            const left = document.getElementById('mod3-left');
-            const right = document.getElementById('mod3-right');
-            const aLeft = document.getElementById('mod3-arrow-left');
-            const aRight = document.getElementById('mod3-arrow-right');
-            aLeft.style.opacity = '1';
-            aRight.style.opacity = '1';
-            
-            if (window.app.selectedCase === 'attract') {
-                left.style.transform = 'translateX(calc(-50% + 80px))';
-                right.style.transform = 'translateX(calc(50% - 80px))';
-            } else {
-                left.style.transform = 'translateX(calc(-50% - 80px))';
-                right.style.transform = 'translateX(calc(50% + 80px))';
-            }
-            window.currentAnimationTimeout = setTimeout(() => {
-                if(window.app && window.app.currentModule === 3) {
-                    window.app.setPlayState(false);
-                    aLeft.style.opacity = '0';
-                    aRight.style.opacity = '0';
-                }
-            }, 1200);
-        }
-
-        function resetModule3() {
-            const left = document.getElementById('mod3-left');
-            const right = document.getElementById('mod3-right');
-            const aLeft = document.getElementById('mod3-arrow-left');
-            const aRight = document.getElementById('mod3-arrow-right');
-            if (left && right) {
-                left.style.transform = 'translateX(-50%)';
-                right.style.transform = 'translateX(50%)';
-                aLeft.style.opacity = '0';
-                aRight.style.opacity = '0';
-            }
-        }
-
-        // ==========================================
-        // js/modules/module4.js
-        // ==========================================
-        let scene1, camera1, renderer1, controls1;
-        let scene2, camera2, renderer2, controls2;
-        let latticeGroup1, latticeGroup2;
-        let isInitialized = false;
-
-        function createTextSprite(message) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 128;
-            canvas.height = 64;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = 'rgba(0, 0, 0, 0)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.font = 'bold 44px sans-serif';
-            ctx.fillStyle = 'white';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(message, canvas.width / 2, canvas.height / 2);
-            const texture = new THREE.CanvasTexture(canvas);
-            const spriteMaterial = new THREE.SpriteMaterial({ map: texture, depthTest: false, transparent: true });
-            const sprite = new THREE.Sprite(spriteMaterial);
-            sprite.scale.set(1.5, 0.75, 1);
-            return sprite;
-        }
-
-        function initModule4() {
-            if (isInitialized) return;
-            const c1 = document.getElementById('webgl-container-1');
-            const c2 = document.getElementById('webgl-container-2');
-            
-            // Scene 1 (Space-filling)
-            scene1 = new THREE.Scene();
-            camera1 = new THREE.PerspectiveCamera(45, c1.clientWidth / c1.clientHeight, 0.1, 1000);
-            camera1.position.set(7, 7, 11);
-            renderer1 = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer1.setSize(c1.clientWidth, c1.clientHeight);
-            renderer1.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            c1.appendChild(renderer1.domElement);
-            controls1 = new OrbitControls(camera1, renderer1.domElement);
-            controls1.enableDamping = true;
-            controls1.autoRotate = true;
-            controls1.autoRotateSpeed = 1.0;
-            scene1.add(new THREE.AmbientLight(0xffffff, 0.6));
-            const dl1 = new THREE.DirectionalLight(0xffffff, 1);
-            dl1.position.set(10, 20, 10);
-            scene1.add(dl1);
-
-            // Scene 2 (Ball-and-stick)
-            scene2 = new THREE.Scene();
-            camera2 = new THREE.PerspectiveCamera(45, c2.clientWidth / c2.clientHeight, 0.1, 1000);
-            camera2.position.set(7, 7, 11);
-            renderer2 = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer2.setSize(c2.clientWidth, c2.clientHeight);
-            renderer2.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            c2.appendChild(renderer2.domElement);
-            controls2 = new OrbitControls(camera2, renderer2.domElement);
-            controls2.enableDamping = true;
-            controls2.autoRotate = false; // El 1 manejará la rotación de ambos
-            scene2.add(new THREE.AmbientLight(0xffffff, 0.6));
-            const dl2 = new THREE.DirectionalLight(0xffffff, 1);
-            dl2.position.set(10, 20, 10);
-            scene2.add(dl2);
-
-            // Sync controls
-            controls1.addEventListener('change', () => {
-                camera2.position.copy(camera1.position);
-                camera2.rotation.copy(camera1.rotation);
-            });
-            controls2.addEventListener('change', () => {
-                camera1.position.copy(camera2.position);
-                camera1.rotation.copy(camera2.rotation);
-            });
-
-            buildLattice1();
-            buildLattice2();
-            window.addEventListener('resize', onWindowResize);
-            
-            const resizeObserver = new ResizeObserver(() => {
-                onWindowResize();
-            });
-            resizeObserver.observe(c1);
-            resizeObserver.observe(c2);
-            
-            isInitialized = true;
-            animate();
-        }
-        
-        let globalNaSpriteMat, globalClSpriteMat;
-        
-        function initSpriteMaterials() {
-            if (globalNaSpriteMat) return;
-            const cNa = document.createElement('canvas'); cNa.width = 128; cNa.height = 64;
-            const ctxNa = cNa.getContext('2d');
-            ctxNa.font = 'bold 44px sans-serif'; ctxNa.fillStyle = 'white'; ctxNa.textAlign = 'center'; ctxNa.textBaseline = 'middle';
-            ctxNa.fillText('Na⁺', 64, 32);
-            globalNaSpriteMat = new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cNa), depthTest: false, transparent: true });
-
-            const cCl = document.createElement('canvas'); cCl.width = 128; cCl.height = 64;
-            const ctxCl = cCl.getContext('2d');
-            ctxCl.font = 'bold 44px sans-serif'; ctxCl.fillStyle = 'white'; ctxCl.textAlign = 'center'; ctxCl.textBaseline = 'middle';
-            ctxCl.fillText('Cl⁻', 64, 32);
-            globalClSpriteMat = new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cCl), depthTest: false, transparent: true });
-        }
-
-        function buildLattice1() {
-            latticeGroup1 = new THREE.Group();
-            const size = 4;
-            const spacing = 1.5;
-            const offset = (size * spacing) / 2 - (spacing / 2);
-            const naMaterial = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.3, metalness: 0.1 });
-            const clMaterial = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.3, metalness: 0.1 });
-            const naGeo = new THREE.SphereGeometry(0.5, 32, 32);
-            const clGeo = new THREE.SphereGeometry(0.7, 32, 32);
-            
-            for (let x = 0; x < size; x++) {
-                for (let y = 0; y < size; y++) {
-                    for (let z = 0; z < size; z++) {
-                        const isNa = (x + y + z) % 2 === 0;
-                        const group = new THREE.Group();
-                        group.position.set((x * spacing) - offset, (y * spacing) - offset, (z * spacing) - offset);
-                        group.userData.basePosition = group.position.clone();
-                        
-                        const mesh = new THREE.Mesh(isNa ? naGeo : clGeo, isNa ? naMaterial : clMaterial);
-                        group.add(mesh);
-                        
-                        initSpriteMaterials();
-                        const sprite = new THREE.Sprite(isNa ? globalNaSpriteMat : globalClSpriteMat);
-                        sprite.scale.set(1.5, 0.75, 1);
-                        sprite.position.set(0, 0, 0);
-                        group.add(sprite);
-                        
-                        group.scale.set(0, 0, 0);
-                        latticeGroup1.add(group);
-                    }
-                }
-            }
-            scene1.add(latticeGroup1);
-        }
-
-        function buildLattice2() {
-            latticeGroup2 = new THREE.Group();
-            const size = 4;
-            const spacing = 1.5;
-            const offset = (size * spacing) / 2 - (spacing / 2);
-            const naMaterial = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.3, metalness: 0.1 });
-            const clMaterial = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.3, metalness: 0.1 });
-            const naGeo = new THREE.SphereGeometry(0.25, 32, 32);
-            const clGeo = new THREE.SphereGeometry(0.35, 32, 32);
-            
-            const stickGeo = new THREE.CylinderGeometry(0.05, 0.05, spacing, 8);
-            stickGeo.translate(0, spacing/2, 0);
-            const stickMaterial = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.5 });
-
-            for (let x = 0; x < size; x++) {
-                for (let y = 0; y < size; y++) {
-                    for (let z = 0; z < size; z++) {
-                        const isNa = (x + y + z) % 2 === 0;
-                        const group = new THREE.Group();
-                        group.position.set((x * spacing) - offset, (y * spacing) - offset, (z * spacing) - offset);
-                        group.userData.basePosition = group.position.clone();
-                        
-                        const mesh = new THREE.Mesh(isNa ? naGeo : clGeo, isNa ? naMaterial : clMaterial);
-                        group.add(mesh);
-                        
-                        initSpriteMaterials();
-                        const sprite = new THREE.Sprite(isNa ? globalNaSpriteMat : globalClSpriteMat);
-                        sprite.position.set(0, 0, 0);
-                        sprite.scale.set(1.0, 0.5, 1);
-                        group.add(sprite);
-
-                        if (x < size - 1) {
-                            const stickX = new THREE.Mesh(stickGeo, stickMaterial);
-                            stickX.rotation.z = -Math.PI / 2;
-                            group.add(stickX);
-                        }
-                        if (y < size - 1) {
-                            const stickY = new THREE.Mesh(stickGeo, stickMaterial);
-                            group.add(stickY);
-                        }
-                        if (z < size - 1) {
-                            const stickZ = new THREE.Mesh(stickGeo, stickMaterial);
-                            stickZ.rotation.x = Math.PI / 2;
-                            group.add(stickZ);
-                        }
-                        
-                        group.scale.set(0, 0, 0);
-                        latticeGroup2.add(group);
-                    }
-                }
-            }
-            scene2.add(latticeGroup2);
-        }
-
-        function animate() {
-            if (!isInitialized) return;
-            requestAnimationFrame(animate);
-            controls1.update();
-            
-            const time = Date.now() * 0.005;
-            
-            if (latticeGroup1) {
-                latticeGroup1.children.forEach((child, i) => {
-                    child.position.y = child.userData.basePosition.y + Math.sin(time + i) * 0.05;
-                });
-            }
-            if (latticeGroup2) {
-                latticeGroup2.children.forEach((child, i) => {
-                    child.position.y = child.userData.basePosition.y + Math.sin(time + i) * 0.05;
-                });
-            }
-            
-            renderer1.render(scene1, camera1);
-            renderer2.render(scene2, camera2);
-        }
-
-        function playModule4() {
-            const children1 = latticeGroup1.children;
-            const children2 = latticeGroup2.children;
-            let delay = 0;
-            children1.forEach(child => child.scale.set(0, 0, 0));
-            children2.forEach(child => child.scale.set(0, 0, 0));
-            
-            const sortedIndices = Array.from(children1.keys()).sort((a, b) => children1[a].position.length() - children1[b].position.length());
-            
-            sortedIndices.forEach((i) => {
-                setTimeout(() => {
-                    let scale = 0;
-                    const popIn = setInterval(() => {
-                        scale += 0.1;
-                        if (scale >= 1) {
-                            children1[i].scale.set(1, 1, 1);
-                            children2[i].scale.set(1, 1, 1);
-                            clearInterval(popIn);
-                        } else {
-                            children1[i].scale.set(scale, scale, scale);
-                            children2[i].scale.set(scale, scale, scale);
-                        }
-                    }, 16);
-                }, delay);
-                delay += 20;
-            });
-            setTimeout(() => {
-                if(window.app && window.app.currentModule === 4) window.app.setPlayState(false);
-            }, delay + 500);
-        }
-
-        function resetModule4() {
-            if (latticeGroup1) latticeGroup1.children.forEach(child => child.scale.set(0, 0, 0));
-            if (latticeGroup2) latticeGroup2.children.forEach(child => child.scale.set(0, 0, 0));
-        }
-
-        function disposeModule4() { }
-
-        function onWindowResize() {
-            if (!isInitialized) return;
-            setTimeout(() => {
-                const c1 = document.getElementById('webgl-container-1');
-                const c2 = document.getElementById('webgl-container-2');
-                if (c1.clientWidth > 0) {
-                    camera1.aspect = c1.clientWidth / c1.clientHeight;
-                    camera1.updateProjectionMatrix();
-                    renderer1.setSize(c1.clientWidth, c1.clientHeight);
-                }
-                if (c2.clientWidth > 0) {
-                    camera2.aspect = c2.clientWidth / c2.clientHeight;
-                    camera2.updateProjectionMatrix();
-                    renderer2.setSize(c2.clientWidth, c2.clientHeight);
-                }
-            }, 50);
-        }
-
-        window.toggleFullscreenMod4 = function(viewId) {
-            const el = document.getElementById(viewId);
-            if(el.classList.contains('fixed')) return; // ya esta en pantalla completa
-            
-            el.classList.remove('relative', 'flex-1');
-            el.classList.add('fixed', 'inset-0', 'z-[55]', 'bg-slate-900', 'p-4', 'flex', 'items-center', 'justify-center');
-            document.getElementById('btn-mod4-back').classList.remove('hidden');
-            
-            // Ocultar botones de expandir
-            document.getElementById('btn-expand-1').classList.add('hidden');
-            document.getElementById('btn-expand-2').classList.add('hidden');
-            
-            onWindowResize();
-        }
-
-        window.exitFullscreenMod4 = function() {
-            const v1 = document.getElementById('mod4-view-1');
-            const v2 = document.getElementById('mod4-view-2');
-            [v1, v2].forEach(el => {
-                el.classList.add('relative', 'flex-1');
-                el.classList.remove('fixed', 'inset-0', 'z-[55]', 'bg-slate-900', 'p-4', 'flex', 'items-center', 'justify-center');
-            });
-            document.getElementById('btn-mod4-back').classList.add('hidden');
-            
-            // Mostrar botones de expandir nuevamente
-            document.getElementById('btn-expand-1').classList.remove('hidden');
-            document.getElementById('btn-expand-2').classList.remove('hidden');
-            
-            // Restablecer el estado original de la cámara
-            camera1.position.set(7, 7, 11);
-            controls1.target.set(0, 0, 0);
-            controls1.update();
-            camera2.position.set(7, 7, 11);
-            controls2.target.set(0, 0, 0);
-            controls2.update();
-            
-            // Forzar resize inmediato
-            onWindowResize();
-        }
-
-        // ==========================================
-        // js/main.js
-        // ==========================================
-        class App {
-            constructor() {
-                this.currentModule = 0;
-                this.isPlaying = false;
-                
-                this.viewDashboard = document.getElementById('view-dashboard');
-                this.viewSimulation = document.getElementById('view-simulation');
-                this.btnHome = document.getElementById('btn-home');
-                this.btnPrev = document.getElementById('btn-prev');
-                this.btnNext = document.getElementById('btn-next');
-                this.btnPlay = document.getElementById('btn-play');
-                this.btnReset = document.getElementById('btn-reset');
-                
-                this.btnMod1 = document.getElementById('btn-mod-1');
-                this.btnMod2 = document.getElementById('btn-mod-2');
-                this.btnMod3 = document.getElementById('btn-mod-3');
-                this.btnMod4 = document.getElementById('btn-mod-4');
-                
-                this.simTitle = document.getElementById('sim-title');
-                this.simDesc = document.getElementById('sim-desc');
-                this.svgLayer = document.getElementById('svg-layer');
-                this.forcesLayer = document.getElementById('forces-layer');
-                this.webglContainer = document.getElementById('webgl-wrapper');
-                this.mod3Controls = document.getElementById('mod3-controls');
-                
-                this.iconPlay = document.getElementById('icon-play');
-                this.iconPause = document.getElementById('icon-pause');
-                this.btnPlayText = document.getElementById('btn-play-text');
-                
-                this.bindEvents();
-            }
-            
-            bindEvents() {
-                this.btnHome.addEventListener('click', () => this.goHome());
-                this.btnPrev.addEventListener('click', () => this.openModule(this.currentModule - 1));
-                this.btnNext.addEventListener('click', () => this.openModule(this.currentModule + 1));
-                
-                this.btnMod1?.addEventListener('click', () => this.openModule(1));
-                this.btnMod2?.addEventListener('click', () => this.openModule(2));
-                this.btnMod3?.addEventListener('click', () => this.openModule(3));
-                this.btnMod4?.addEventListener('click', () => this.openModule(4));
-                
-                this.btnPlay.addEventListener('click', () => this.togglePlay());
-                this.btnReset.addEventListener('click', () => this.resetSimulation());
-                
-                setupModule3Controls();
-            }
-            
-            goHome() {
-                this.currentModule = 0;
-                this.isPlaying = false;
-                this.updateUI();
-                this.clearLayers();
-                if(window.currentAnimationTimeout) clearTimeout(window.currentAnimationTimeout);
-            }
-            
-            openModule(id) {
-                if (id < 1 || id > 4) return;
-                this.currentModule = id;
-                this.isPlaying = false;
-                this.updateUI();
-                this.renderCurrentModule();
-            }
-            
-            clearLayers() {
-                this.svgLayer.classList.add('hidden');
-                this.forcesLayer.classList.add('hidden');
-                this.webglContainer.classList.add('hidden');
-                this.mod3Controls.classList.add('hidden');
-                document.getElementById('svg-content').innerHTML = '';
-                document.getElementById('forces-container').innerHTML = '';
-                disposeModule4();
-            }
-            
-            renderCurrentModule() {
-                this.clearLayers();
-                this.setPlayState(false);
-                if(window.currentAnimationTimeout) clearTimeout(window.currentAnimationTimeout);
-                
-                switch (this.currentModule) {
-                    case 1:
-                        this.simTitle.innerText = "Transferencia de Electrones";
-                        this.simDesc.innerText = "El sodio (Na) transfiere su electrón de valencia al cloro (Cl).";
-                        this.svgLayer.classList.remove('hidden');
-                        renderModule1();
-                        break;
-                    case 2:
-                        this.simTitle.innerText = "Formación de Iones";
-                        this.simDesc.innerText = "Tras la transferencia, el Na pierde su última capa y se reduce (Catión Na⁺). El Cl la completa y aumenta ligeramente (Anión Cl⁻).";
-                        this.svgLayer.classList.remove('hidden');
-                        renderModule2();
-                        break;
-                    case 3:
-                        this.simTitle.innerText = "Atracción y Repulsión Electrostática";
-                        this.simDesc.innerText = "Las cargas opuestas se atraen; las cargas iguales se repelen.";
-                        this.forcesLayer.classList.remove('hidden');
-                        this.mod3Controls.classList.remove('hidden');
-                        renderModule3();
-                        break;
-                    case 4:
-                        this.simTitle.innerText = "Sólido Iónico (Red Cristalina)";
-                        this.simDesc.innerText = "Múltiples iones Na⁺ y Cl⁻ se organizan alternadamente formando una estructura cúbica tridimensional. No existen moléculas aisladas.";
-                        this.webglContainer.classList.remove('hidden');
-                        initModule4();
-                        break;
-                }
-            }
-            
-            togglePlay() {
-                this.setPlayState(!this.isPlaying);
-                if (this.isPlaying) {
-                    switch(this.currentModule) {
-                        case 1: playModule1(); break;
-                        case 2: playModule2(); break;
-                        case 3: playModule3(); break;
-                        case 4: playModule4(); break;
-                    }
-                }
-            }
-            
-            resetSimulation() {
-                this.setPlayState(false);
-                if(window.currentAnimationTimeout) clearTimeout(window.currentAnimationTimeout);
-                switch(this.currentModule) {
-                    case 1: resetModule1(); break;
-                    case 2: resetModule2(); break;
-                    case 3: resetModule3(); break;
-                    case 4: resetModule4(); break;
-                }
-            }
-            
-            setPlayState(isPlaying) {
-                this.isPlaying = isPlaying;
-                if (isPlaying) {
-                    this.iconPlay.classList.add('hidden');
-                    this.iconPause.classList.remove('hidden');
-                    this.btnPlayText.innerText = "Pausar";
-                } else {
-                    this.iconPlay.classList.remove('hidden');
-                    this.iconPause.classList.add('hidden');
-                    this.btnPlayText.innerText = "Reproducir";
-                }
-            }
-            
-            updateUI() {
-                if (this.currentModule === 0) {
-                    this.viewDashboard.classList.remove('hidden');
-                    this.viewDashboard.classList.add('grid');
-                    this.viewSimulation.classList.add('hidden');
-                    this.viewSimulation.classList.remove('flex');
-                    this.btnHome.classList.add('hidden');
-                } else {
-                    this.viewDashboard.classList.add('hidden');
-                    this.viewDashboard.classList.remove('grid');
-                    this.viewSimulation.classList.remove('hidden');
-                    this.viewSimulation.classList.add('flex');
-                    this.btnHome.classList.remove('hidden');
-                    
-                    this.btnPrev.disabled = (this.currentModule === 1);
-                    this.btnNext.disabled = (this.currentModule === 4);
-                }
-            }
-        }
-
-        window.app = new App();
-    </script>
+    <!-- Main Router -->
+    <script src="js/main.js"></script>
 </body>
 </html>

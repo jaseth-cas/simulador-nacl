@@ -1,7 +1,20 @@
 /* Animaciones y estilos personalizados sobre Tailwind */
 :root {
+    /* Modulo 1: NaCl */
     --color-na: #3b82f6; /* Azul para el Sodio */
     --color-cl: #10b981; /* Verde para el Cloro */
+    
+    /* Modulo 2: MgO */
+    --color-mg: #f97316; /* Naranja para el Magnesio */
+    --color-o:  #ef4444; /* Rojo para el Oxígeno */
+
+    /* Modulo 3: AlF3 */
+    --color-al: #a855f7; /* Morado/Violeta para el Aluminio */
+    --color-f:  #06b6d4; /* Cyan para el Flúor */
+
+    /* Modulo 4: KBr */
+    --color-k:  #eab308; /* Amarillo ámbar para el Potasio */
+    --color-br: #7c3aed; /* Púrpura oscuro para el Bromo */
 }
 
 /* Animaciones */
