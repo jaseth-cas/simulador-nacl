@@ -50,12 +50,12 @@ window.FormacionAlf3 = (function() {
         f3Group += `<g id="mod3-f3-ion">` + generateAtomSVG({ ...fProps, x: 760, y: 480, idPrefix: 'm3-f3n', chargePosition: 'right' }) + `</g></g>`;
         
         let arrowsGroup = `<g id="mod3-arrows" style="opacity: 0; transition: opacity 0.5s ease-in-out;">`;
-        arrowsGroup += drawArrow('m3-arr-1a', 500, 225, 500, 240, 'white');
-        arrowsGroup += drawArrow('m3-arr-1b', 500, 270, 500, 255, 'white');
-        arrowsGroup += drawArrow('m3-arr-2a', 339, 441, 353, 436, 'white');
-        arrowsGroup += drawArrow('m3-arr-2b', 376, 427, 362, 432, 'white');
-        arrowsGroup += drawArrow('m3-arr-3a', 661, 441, 647, 436, 'white');
-        arrowsGroup += drawArrow('m3-arr-3b', 624, 427, 638, 432, 'white');
+        arrowsGroup += drawArrow('m3-arr-1a', 500, 280, 500, 288, 'white');
+        arrowsGroup += drawArrow('m3-arr-1b', 500, 300, 500, 292, 'white');
+        arrowsGroup += drawArrow('m3-arr-2a', 408, 415, 414, 413, 'white');
+        arrowsGroup += drawArrow('m3-arr-2b', 424, 410, 418, 412, 'white');
+        arrowsGroup += drawArrow('m3-arr-3a', 592, 415, 586, 413, 'white');
+        arrowsGroup += drawArrow('m3-arr-3b', 576, 410, 582, 412, 'white');
         arrowsGroup += `</g>`;
         
         svgLayer.innerHTML = alGroup + f1Group + f2Group + f3Group + arrowsGroup;
@@ -68,9 +68,9 @@ window.FormacionAlf3 = (function() {
         const f3Cont = document.getElementById('mod3-f3-container');
         
         // Se atraen hacia el centro
-        if (f1Cont) f1Cont.style.transform = 'translateY(15px)';
-        if (f2Cont) f2Cont.style.transform = 'translate(15px, -7px)';
-        if (f3Cont) f3Cont.style.transform = 'translate(-15px, -7px)';
+        if (f1Cont) f1Cont.style.transform = 'translateY(80px)';
+        if (f2Cont) f2Cont.style.transform = 'translate(92px, -35px)';
+        if (f3Cont) f3Cont.style.transform = 'translate(-92px, -35px)';
         
         const arrows = document.getElementById('mod3-arrows');
         if (arrows) arrows.style.opacity = '1';

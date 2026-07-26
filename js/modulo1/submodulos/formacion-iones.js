@@ -13,8 +13,8 @@ window.FormacionIones = (function() {
         clGroup += `</g>`;
         
         let arrowsGroup = `<g id="mod2-arrows" style="opacity: 0; transition: opacity 0.5s ease-in-out;">`;
-        arrowsGroup += drawArrow('m2-arr-left', 460, 300, 480, 300, 'white');
-        arrowsGroup += drawArrow('m2-arr-right', 530, 300, 510, 300, 'white');
+        arrowsGroup += drawArrow('m2-arr-left', 480, 300, 488, 300, 'white');
+        arrowsGroup += drawArrow('m2-arr-right', 500, 300, 492, 300, 'white');
         arrowsGroup += `</g>`;
         
         svgLayer.innerHTML = naGroup + clGroup + arrowsGroup;
@@ -31,8 +31,8 @@ window.FormacionIones = (function() {
         const naCont = document.getElementById('mod2-na-container');
         const clCont = document.getElementById('mod2-cl-container');
         
-        if (naCont) naCont.style.transform = 'translateX(60px)';
-        if (clCont) clCont.style.transform = 'translateX(-50px)';
+        if (naCont) naCont.style.transform = 'translateX(100px)';
+        if (clCont) clCont.style.transform = 'translateX(-100px)';
         const arrows = document.getElementById('mod2-arrows');
         if (arrows) arrows.style.opacity = '1';
 

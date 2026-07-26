@@ -73,11 +73,11 @@ class App {
         // SVG Layer: Ajustar viewBox de manera óptima por módulo para el máximo zoom
         if (svgLayer) {
             if (isMobile) {
-                let viewBox = '150 0 700 600'; // Default mobile (Mod 4 needs more width)
+                let viewBox = '150 0 700 600'; // Default mobile
                 if (this.currentModuleId === 1 || this.currentModuleId === 2) {
                     viewBox = '200 0 600 600'; // Mod 1 & 2 can be zoomed in more
-                } else if (this.currentModuleId === 3) {
-                    viewBox = '180 0 640 600'; // Mod 3
+                } else if (this.currentModuleId === 3 || this.currentModuleId === 4) {
+                    viewBox = '100 0 800 600'; // Mod 3 & 4 necesitan más espacio horizontal
                 }
                 svgLayer.setAttribute('viewBox', viewBox);
             } else {

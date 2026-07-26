@@ -35,7 +35,8 @@ window.TransferenciaKbr = (function() {
             electronStroke: '#57534e'
         });
         
-        const arrow = drawArrow('mod4-arrow', 350, 220, 650, 220, 'rgba(255,255,255,0.3)', true);
+        // Flecha horizontal por el medio (y=300)
+        const arrow = drawArrow('mod4-arrow', 360, 300, 640, 300, 'rgba(255,255,255,0.3)', true);
         svgLayer.innerHTML = arrow + kSVG + brSVG;
     }
 
@@ -47,8 +48,8 @@ window.TransferenciaKbr = (function() {
         const svgLayer = document.getElementById('svg-content');
         
         const tempElectron = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        tempElectron.setAttribute('cx', '350');
-        tempElectron.setAttribute('cy', '300');
+        tempElectron.setAttribute('cx', '355'); // Borde derecho del K
+        tempElectron.setAttribute('cy', '300'); // Medio
         tempElectron.setAttribute('r', '4');
         tempElectron.setAttribute('fill', '#fef08a');
         tempElectron.setAttribute('stroke', '#ca8a04');
@@ -61,7 +62,7 @@ window.TransferenciaKbr = (function() {
         
         setTimeout(() => {
             tempElectron.style.opacity = '1';
-            tempElectron.style.transform = 'translate(300px, 0px)';
+            tempElectron.style.transform = 'translate(290px, 0px)'; // Hacia el borde izquierdo del Br (355 + 290 = 645)
         }, 50);
 
         setTimeout(() => {

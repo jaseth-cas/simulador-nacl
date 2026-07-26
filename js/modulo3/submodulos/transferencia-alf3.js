@@ -36,9 +36,9 @@ window.TransferenciaAlf3 = (function() {
         const f2SVG = generateAtomSVG({ ...fProps, x: 240, y: 480, idPrefix: 'mod3-f2' });
         const f3SVG = generateAtomSVG({ ...fProps, x: 760, y: 480, idPrefix: 'mod3-f3' });
         
-        const arrow1 = drawArrow('mod3-a1', 500, 280, 500, 210, 'rgba(255,255,255,0.3)', true);
-        const arrow2 = drawArrow('mod3-a2', 406, 416, 315, 449, 'rgba(255,255,255,0.3)', true);
-        const arrow3 = drawArrow('mod3-a3', 594, 416, 685, 449, 'rgba(255,255,255,0.3)', true);
+        const arrow1 = drawArrow('mod3-a1', 500, 285, 500, 195, 'rgba(255,255,255,0.3)', true);
+        const arrow2 = drawArrow('mod3-a2', 411, 414, 310, 453, 'rgba(255,255,255,0.3)', true);
+        const arrow3 = drawArrow('mod3-a3', 589, 414, 690, 453, 'rgba(255,255,255,0.3)', true);
         
         svgLayer.innerHTML = arrow1 + arrow2 + arrow3 + alSVG + f1SVG + f2SVG + f3SVG;
     }

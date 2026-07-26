@@ -45,8 +45,8 @@ window.FormacionKbr = (function() {
         brGroup += `</g>`;
         
         let arrowsGroup = `<g id="mod4-arrows" style="opacity: 0; transition: opacity 0.5s ease-in-out;">`;
-        arrowsGroup += drawArrow('m4-arr-left', 455, 300, 475, 300, 'white');
-        arrowsGroup += drawArrow('m4-arr-right', 525, 300, 505, 300, 'white');
+        arrowsGroup += drawArrow('m4-arr-left', 480, 300, 488, 300, 'white');
+        arrowsGroup += drawArrow('m4-arr-right', 500, 300, 492, 300, 'white');
         arrowsGroup += `</g>`;
         
         svgLayer.innerHTML = kGroup + brGroup + arrowsGroup;
@@ -63,8 +63,8 @@ window.FormacionKbr = (function() {
         const kCont = document.getElementById('mod4-k-container');
         const brCont = document.getElementById('mod4-br-container');
         
-        if (kCont) kCont.style.transform = 'translateX(80px)';
-        if (brCont) brCont.style.transform = 'translateX(-80px)';
+        if (kCont) kCont.style.transform = 'translateX(130px)';
+        if (brCont) brCont.style.transform = 'translateX(-130px)';
         const arrows = document.getElementById('mod4-arrows');
         if (arrows) arrows.style.opacity = '1';
 

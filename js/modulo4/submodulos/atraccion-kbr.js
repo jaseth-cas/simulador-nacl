@@ -100,27 +100,27 @@ window.AtraccionKbr = (function() {
         
         // Flechas más delgadas (fuerza menor por distancia)
         const leftArrowHTML = isAttract 
-            ? `<div id="mod4-arrow-left" class="absolute right-[-50px] opacity-0 transition-opacity duration-300">
-                    <svg width="40" height="16"><line x1="0" y1="8" x2="30" y2="8" stroke="white" stroke-width="2"/><polygon points="30,3 40,8 30,13" fill="white"/></svg>
+            ? `<div id="mod4-arrow-left" class="absolute right-[-12px] opacity-0 transition-opacity duration-300">
+                    <svg width="12" height="20"><line x1="0" y1="10" x2="8" y2="10" stroke="white" stroke-width="2"/><polygon points="8,7 12,10 8,13" fill="white"/></svg>
                </div>`
-            : `<div id="mod4-arrow-left" class="absolute left-[-50px] opacity-0 transition-opacity duration-300 transform rotate-180">
-                    <svg width="40" height="16"><line x1="0" y1="8" x2="30" y2="8" stroke="white" stroke-width="2"/><polygon points="30,3 40,8 30,13" fill="white"/></svg>
+            : `<div id="mod4-arrow-left" class="absolute left-[-12px] opacity-0 transition-opacity duration-300 transform rotate-180">
+                    <svg width="12" height="20"><line x1="0" y1="10" x2="8" y2="10" stroke="white" stroke-width="2"/><polygon points="8,7 12,10 8,13" fill="white"/></svg>
                </div>`;
                
         const rightArrowHTML = isAttract
-            ? `<div id="mod4-arrow-right" class="absolute left-[-50px] opacity-0 transition-opacity duration-300 transform rotate-180">
-                    <svg width="40" height="16"><line x1="0" y1="8" x2="30" y2="8" stroke="white" stroke-width="2"/><polygon points="30,3 40,8 30,13" fill="white"/></svg>
+            ? `<div id="mod4-arrow-right" class="absolute left-[-12px] opacity-0 transition-opacity duration-300 transform rotate-180">
+                    <svg width="12" height="20"><line x1="0" y1="10" x2="8" y2="10" stroke="white" stroke-width="2"/><polygon points="8,7 12,10 8,13" fill="white"/></svg>
                </div>`
-            : `<div id="mod4-arrow-right" class="absolute right-[-50px] opacity-0 transition-opacity duration-300">
-                    <svg width="40" height="16"><line x1="0" y1="8" x2="30" y2="8" stroke="white" stroke-width="2"/><polygon points="30,3 40,8 30,13" fill="white"/></svg>
+            : `<div id="mod4-arrow-right" class="absolute right-[-12px] opacity-0 transition-opacity duration-300">
+                    <svg width="12" height="20"><line x1="0" y1="10" x2="8" y2="10" stroke="white" stroke-width="2"/><polygon points="8,7 12,10 8,13" fill="white"/></svg>
                </div>`;
         
         container.innerHTML = `
-            <div id="mod4-left" class="absolute left-1/4 -translate-x-1/2 flex items-center justify-center transition-transform duration-1000 ease-in-out">
+            <div id="mod4-left" class="absolute left-1/4 -translate-x-1/2 flex items-center justify-center transition-all duration-1000 ease-in-out">
                 ${leftArrowHTML}
                 ${getIonHTML(leftType)}
             </div>
-            <div id="mod4-right" class="absolute right-1/4 translate-x-1/2 flex items-center justify-center transition-transform duration-1000 ease-in-out">
+            <div id="mod4-right" class="absolute right-1/4 translate-x-1/2 flex items-center justify-center transition-all duration-1000 ease-in-out">
                 ${getIonHTML(rightType)}
                 ${rightArrowHTML}
             </div>
@@ -139,11 +139,11 @@ window.AtraccionKbr = (function() {
         
         // Movimiento más sutil, no se acercan tanto (radios grandes)
         if (selectedCase === 'attract') {
-            left.style.transform = 'translateX(calc(-50% + 40px))';
-            right.style.transform = 'translateX(calc(50% - 40px))';
+            left.style.left = 'calc(50% - 85px)';
+            right.style.right = 'calc(50% - 85px)';
         } else {
-            left.style.transform = 'translateX(calc(-50% - 40px))';
-            right.style.transform = 'translateX(calc(50% + 40px))';
+            left.style.left = '5%';
+            right.style.right = '5%';
         }
         
         window.currentAnimationTimeout = setTimeout(() => {
@@ -161,8 +161,10 @@ window.AtraccionKbr = (function() {
         const aLeft = document.getElementById('mod4-arrow-left');
         const aRight = document.getElementById('mod4-arrow-right');
         if (left && right) {
-            left.style.transform = 'translateX(-50%)';
-            right.style.transform = 'translateX(50%)';
+            left.style.left = '25%';
+            right.style.right = '25%';
+            left.style.transform = '';
+            right.style.transform = '';
             if (aLeft) aLeft.style.opacity = '0';
             if (aRight) aRight.style.opacity = '0';
         }

@@ -30,7 +30,7 @@ window.TransferenciaElectrones = (function() {
             idPrefix: 'mod1-cl',
             showLabels: true
         });
-        const arrow = drawArrow('mod1-arrow', 380, 220, 620, 220, 'rgba(255,255,255,0.3)', true);
+        const arrow = drawArrow('mod1-arrow', 395, 300, 605, 300, 'rgba(255,255,255,0.3)', true);
         svgLayer.innerHTML = arrow + naSVG + clSVG;
     }
 
@@ -39,7 +39,7 @@ window.TransferenciaElectrones = (function() {
         if (valenceNa) valenceNa.style.opacity = '0';
         
         const tempElectron = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        tempElectron.setAttribute('cx', '380');
+        tempElectron.setAttribute('cx', '385');
         tempElectron.setAttribute('cy', '300');
         tempElectron.setAttribute('r', '4');
         tempElectron.setAttribute('fill', '#60a5fa');
@@ -52,7 +52,7 @@ window.TransferenciaElectrones = (function() {
         
         setTimeout(() => {
             tempElectron.style.opacity = '1';
-            tempElectron.style.transform = 'translateX(240px)';
+            tempElectron.style.transform = 'translateX(230px)';
         }, 50);
 
         setTimeout(() => {

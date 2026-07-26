@@ -99,29 +99,29 @@ window.AtraccionMgo = (function() {
         
         const isAttract = selectedCase === 'attract';
         
-        // Flechas más gruesas (stroke-width 5) para indicar fuerza mayor (q1*q2 = 4 vs 1 en NaCl)
+        // Flechas más gruesas (stroke-width 3) para indicar fuerza mayor (q1*q2 = 4 vs 1 en NaCl)
         const leftArrowHTML = isAttract 
-            ? `<div id="mod3-arrow-left" class="absolute right-[-70px] opacity-0 transition-opacity duration-300">
-                    <svg width="60" height="30"><line x1="0" y1="15" x2="45" y2="15" stroke="white" stroke-width="5"/><polygon points="45,5 60,15 45,25" fill="white"/></svg>
+            ? `<div id="mod3-arrow-left" class="absolute right-[-12px] opacity-0 transition-opacity duration-300">
+                    <svg width="12" height="20"><line x1="0" y1="10" x2="7" y2="10" stroke="white" stroke-width="3"/><polygon points="7,6 12,10 7,14" fill="white"/></svg>
                </div>`
-            : `<div id="mod3-arrow-left" class="absolute left-[-70px] opacity-0 transition-opacity duration-300 transform rotate-180">
-                    <svg width="60" height="30"><line x1="0" y1="15" x2="45" y2="15" stroke="white" stroke-width="5"/><polygon points="45,5 60,15 45,25" fill="white"/></svg>
+            : `<div id="mod3-arrow-left" class="absolute left-[-12px] opacity-0 transition-opacity duration-300 transform rotate-180">
+                    <svg width="12" height="20"><line x1="0" y1="10" x2="7" y2="10" stroke="white" stroke-width="3"/><polygon points="7,6 12,10 7,14" fill="white"/></svg>
                </div>`;
                
         const rightArrowHTML = isAttract
-            ? `<div id="mod3-arrow-right" class="absolute left-[-70px] opacity-0 transition-opacity duration-300 transform rotate-180">
-                    <svg width="60" height="30"><line x1="0" y1="15" x2="45" y2="15" stroke="white" stroke-width="5"/><polygon points="45,5 60,15 45,25" fill="white"/></svg>
+            ? `<div id="mod3-arrow-right" class="absolute left-[-12px] opacity-0 transition-opacity duration-300 transform rotate-180">
+                    <svg width="12" height="20"><line x1="0" y1="10" x2="7" y2="10" stroke="white" stroke-width="3"/><polygon points="7,6 12,10 7,14" fill="white"/></svg>
                </div>`
-            : `<div id="mod3-arrow-right" class="absolute right-[-70px] opacity-0 transition-opacity duration-300">
-                    <svg width="60" height="30"><line x1="0" y1="15" x2="45" y2="15" stroke="white" stroke-width="5"/><polygon points="45,5 60,15 45,25" fill="white"/></svg>
+            : `<div id="mod3-arrow-right" class="absolute right-[-12px] opacity-0 transition-opacity duration-300">
+                    <svg width="12" height="20"><line x1="0" y1="10" x2="7" y2="10" stroke="white" stroke-width="3"/><polygon points="7,6 12,10 7,14" fill="white"/></svg>
                </div>`;
         
         container.innerHTML = `
-            <div id="mod3-left" class="absolute left-1/4 -translate-x-1/2 flex items-center justify-center transition-transform duration-500 ease-in-out">
+            <div id="mod3-left" class="absolute left-1/4 -translate-x-1/2 flex items-center justify-center transition-all duration-500 ease-in-out">
                 ${leftArrowHTML}
                 ${getIonHTML(leftType)}
             </div>
-            <div id="mod3-right" class="absolute right-1/4 translate-x-1/2 flex items-center justify-center transition-transform duration-500 ease-in-out">
+            <div id="mod3-right" class="absolute right-1/4 translate-x-1/2 flex items-center justify-center transition-all duration-500 ease-in-out">
                 ${getIonHTML(rightType)}
                 ${rightArrowHTML}
             </div>
@@ -140,11 +140,11 @@ window.AtraccionMgo = (function() {
         
         // Más aceleración y distancia (fuerza 4x)
         if (selectedCase === 'attract') {
-            left.style.transform = 'translateX(calc(-50% + 40px))';
-            right.style.transform = 'translateX(calc(50% - 40px))';
+            left.style.left = 'calc(50% - 61px)';
+            right.style.right = 'calc(50% - 61px)';
         } else {
-            left.style.transform = 'translateX(calc(-50% - 40px))';
-            right.style.transform = 'translateX(calc(50% + 40px))';
+            left.style.left = '10%';
+            right.style.right = '10%';
         }
         
         window.currentAnimationTimeout = setTimeout(() => {
@@ -162,8 +162,10 @@ window.AtraccionMgo = (function() {
         const aLeft = document.getElementById('mod3-arrow-left');
         const aRight = document.getElementById('mod3-arrow-right');
         if (left && right) {
-            left.style.transform = 'translateX(-50%)';
-            right.style.transform = 'translateX(50%)';
+            left.style.left = '25%';
+            right.style.right = '25%';
+            left.style.transform = '';
+            right.style.transform = '';
             if (aLeft) aLeft.style.opacity = '0';
             if (aRight) aRight.style.opacity = '0';
         }

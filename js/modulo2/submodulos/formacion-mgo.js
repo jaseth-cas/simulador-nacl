@@ -45,8 +45,8 @@ window.FormacionMgo = (function() {
         oGroup += `</g>`;
         
         let arrowsGroup = `<g id="mod2-arrows" style="opacity: 0; transition: opacity 0.5s ease-in-out;">`;
-        arrowsGroup += drawArrow('m2-arr-left', 465, 300, 485, 300, 'white');
-        arrowsGroup += drawArrow('m2-arr-right', 535, 300, 515, 300, 'white');
+        arrowsGroup += drawArrow('m2-arr-left', 490, 300, 498, 300, 'white');
+        arrowsGroup += drawArrow('m2-arr-right', 510, 300, 502, 300, 'white');
         arrowsGroup += `</g>`;
         
         svgLayer.innerHTML = mgGroup + oGroup + arrowsGroup;
@@ -57,8 +57,8 @@ window.FormacionMgo = (function() {
         const oCont = document.getElementById('mod2-o-container');
         
         // Reducimos la traslación para que no choquen con la carga 2+ que ahora está a la derecha
-        if (mgCont) mgCont.style.transform = 'translateX(50px)';
-        if (oCont) oCont.style.transform = 'translateX(-50px)';
+        if (mgCont) mgCont.style.transform = 'translateX(110px)';
+        if (oCont) oCont.style.transform = 'translateX(-110px)';
         const arrows = document.getElementById('mod2-arrows');
         if (arrows) arrows.style.opacity = '1';
 

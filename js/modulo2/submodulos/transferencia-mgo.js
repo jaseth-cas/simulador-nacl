@@ -35,8 +35,9 @@ window.TransferenciaMgo = (function() {
             electronStroke: '#b91c1c'
         });
         
-        const arrow = drawArrow('mod2-arrow', 380, 220, 620, 220, 'rgba(255,255,255,0.3)', true);
-        svgLayer.innerHTML = arrow + mgSVG + oSVG;
+        const arrow1 = drawArrow('mod2-arrow1', 395, 280, 625, 280, 'rgba(255,255,255,0.3)', true);
+        const arrow2 = drawArrow('mod2-arrow2', 395, 320, 625, 320, 'rgba(255,255,255,0.3)', true);
+        svgLayer.innerHTML = arrow1 + arrow2 + mgSVG + oSVG;
     }
 
     function play(appInstance) {
@@ -51,7 +52,7 @@ window.TransferenciaMgo = (function() {
         
         // Crear 2 electrones animados
         const e1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        e1.setAttribute('cx', '380');
+        e1.setAttribute('cx', '385');
         e1.setAttribute('cy', '280');
         e1.setAttribute('r', '4');
         e1.setAttribute('fill', '#fcd34d');
@@ -62,7 +63,7 @@ window.TransferenciaMgo = (function() {
         e1.style.opacity = '0';
         
         const e2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        e2.setAttribute('cx', '380');
+        e2.setAttribute('cx', '385');
         e2.setAttribute('cy', '320');
         e2.setAttribute('r', '4');
         e2.setAttribute('fill', '#fcd34d');
@@ -78,8 +79,8 @@ window.TransferenciaMgo = (function() {
         setTimeout(() => {
             e1.style.opacity = '1';
             e2.style.opacity = '1';
-            e1.style.transform = 'translate(240px, -20px)';
-            e2.style.transform = 'translate(240px, 20px)';
+            e1.style.transform = 'translate(250px, 0px)';
+            e2.style.transform = 'translate(250px, 0px)';
         }, 50);
 
         setTimeout(() => {
