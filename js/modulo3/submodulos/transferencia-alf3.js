@@ -26,7 +26,7 @@ window.TransferenciaAlf3 = (function() {
             name: 'Flúor',
             shells: [2, 7],
             color: '#06b6d4',
-            showLabels: false,
+            showLabels: true,
             valenceEmptySpots: [1],
             electronColor: '#67e8f9',
             electronStroke: '#0891b2'

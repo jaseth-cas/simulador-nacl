@@ -33,7 +33,7 @@ window.FormacionAlf3 = (function() {
             showCharge: true, 
             charge: -1, 
             showBrackets: true, 
-            showLabels: false, 
+            showLabels: true, 
             startBracketsVisible: true,
             electronColor: '#67e8f9',
             electronStroke: '#0891b2'

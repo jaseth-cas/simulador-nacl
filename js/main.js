@@ -32,6 +32,12 @@ class App {
         this.iconPause = document.getElementById('icon-pause');
         this.btnPlayText = document.getElementById('btn-play-text');
 
+        // Navigation
+        this.currentApp = 'enlace'; // 'enlace' | 'redox'
+        this.navEnlace = document.getElementById('nav-enlace');
+        this.navRedox = document.getElementById('nav-redox');
+        this.viewRedox = document.getElementById('view-redox');
+
         // Instanciar Módulos Disponibles
         this.modules = {
             1: window.Modulo1 ? new window.Modulo1(this) : null,
@@ -98,6 +104,9 @@ class App {
     }
     
     bindEvents() {
+        this.navEnlace?.addEventListener('click', () => this.switchApp('enlace'));
+        this.navRedox?.addEventListener('click', () => this.switchApp('redox'));
+        
         this.btnHome?.addEventListener('click', () => this.goHome());
         
         this.btnPrev?.addEventListener('click', () => {
@@ -122,6 +131,29 @@ class App {
         this.btnReset?.addEventListener('click', () => this.resetSimulation());
     }
     
+    switchApp(appName) {
+        this.currentApp = appName;
+        
+        if (appName === 'enlace') {
+            this.navEnlace.classList.add('text-blue-400', 'font-semibold', 'border-blue-500');
+            this.navEnlace.classList.remove('text-slate-400', 'hover:text-white', 'border-transparent');
+            
+            this.navRedox.classList.remove('text-blue-400', 'font-semibold', 'border-blue-500');
+            this.navRedox.classList.add('text-slate-400', 'hover:text-white', 'border-transparent');
+        } else {
+            this.navRedox.classList.add('text-blue-400', 'font-semibold', 'border-blue-500');
+            this.navRedox.classList.remove('text-slate-400', 'hover:text-white', 'border-transparent');
+            
+            this.navEnlace.classList.remove('text-blue-400', 'font-semibold', 'border-blue-500');
+            this.navEnlace.classList.add('text-slate-400', 'hover:text-white', 'border-transparent');
+            
+            // Si nos vamos a redox, detenemos la simulación actual
+            this.goHome();
+        }
+        
+        this.updateUI();
+    }
+
     goHome() {
         if (this.currentModuleId > 0 && this.modules[this.currentModuleId]) {
             this.modules[this.currentModuleId].clearLayers();
@@ -184,6 +216,24 @@ class App {
     }
     
     updateUI() {
+        // App Switcher logic
+        if (this.currentApp === 'redox') {
+            this.viewDashboard.classList.add('hidden');
+            this.viewDashboard.classList.remove('grid');
+            this.viewSimulation.classList.add('hidden');
+            this.viewSimulation.classList.remove('flex');
+            this.btnHome.classList.add('hidden');
+            
+            this.viewRedox.classList.remove('hidden');
+            this.viewRedox.classList.add('flex');
+            return;
+        } else {
+            if (this.viewRedox) {
+                this.viewRedox.classList.add('hidden');
+                this.viewRedox.classList.remove('flex');
+            }
+        }
+
         if (this.currentModuleId === 0) {
             this.viewDashboard.classList.remove('hidden');
             this.viewDashboard.classList.add('grid');
