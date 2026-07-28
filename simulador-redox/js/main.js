@@ -510,14 +510,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = REACTIONS_CATALOG[reactionId];
 
         // Panel 1: Botones
-        ['zn', 'na', 'fe-cu', 'mg-o2'].forEach(id => {
-            const btn = document.getElementById(`btn-react-${id}`);
+        const buttonsInfo = [
+            { id: 'zn', reactId: 'zn-cu', iconId: 'icon-zn', iconColor: 'bg-blue-500/20 text-blue-400' },
+            { id: 'na', reactId: 'na-cl', iconId: 'icon-na', iconColor: 'bg-green-500/20 text-green-400' },
+            { id: 'fe-cu', reactId: 'fe-cu', iconId: 'icon-fe', iconColor: 'bg-amber-500/20 text-amber-400' },
+            { id: 'mg-o2', reactId: 'mg-o2', iconId: 'icon-mg', iconColor: 'bg-slate-500/20 text-slate-300' },
+            { id: 'cu-cl2', reactId: 'cu-cl2', iconId: 'icon-cu-cl2', iconColor: 'bg-orange-500/20 text-orange-400' },
+            { id: 'mg-f2', reactId: 'mg-f2', iconId: 'icon-mg-f2', iconColor: 'bg-yellow-500/20 text-yellow-400' }
+        ];
+
+        buttonsInfo.forEach(info => {
+            const btn = document.getElementById(`btn-react-${info.id}`);
+            const icon = document.getElementById(info.iconId);
             if (!btn) return;
-            const fullId = id === 'zn' ? 'zn-cu' : (id === 'na' ? 'na-cl' : id);
-            if (fullId === reactionId) {
+            
+            if (info.reactId === reactionId) {
                 btn.className = `flex items-center justify-between p-2.5 rounded transition text-left ${data.btnStyle.bg} border ${data.btnStyle.border}`;
+                if (icon) icon.className = `w-6 h-6 rounded flex items-center justify-center shrink-0 ${info.iconColor}`;
             } else {
                 btn.className = `flex items-center justify-between p-2.5 bg-slate-900 border border-slate-700 rounded hover:bg-slate-800 transition text-left`;
+                if (icon) icon.className = `w-6 h-6 rounded flex items-center justify-center bg-slate-800 text-slate-400 shrink-0`;
             }
         });
 
@@ -731,10 +743,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('p7-gained').innerHTML = data.panel7.gained;
         document.getElementById('p7-gained').className = data.panel7.gainedTextCls;
     };
-
-    document.getElementById('btn-react-zn')?.addEventListener('click', () => setReaction('zn-cu'));
-    document.getElementById('btn-react-na')?.addEventListener('click', () => setReaction('na-cl'));
-    document.getElementById('btn-react-fe-cu')?.addEventListener('click', () => setReaction('fe-cu'));
 
     // Configuración inicial
     setReaction('zn-cu');
