@@ -8,20 +8,331 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let reaccionIniciada = false;
 
+    // Catálogo Centralizado de Reacciones
+    const REACTIONS_CATALOG = {
+        'zn-cu': {
+            id: 'zn-cu',
+            left: {
+                symbol: 'Zn', coreSymbolAfter: 'Zn²⁺',
+                titleBefore: 'Átomo de Zinc', titleAfter: 'Ion de Zinc',
+                stateStart: '0', stateEnd: '+2', shells: [2, 8, 18], staticElectrons: [],
+                elColor: '#94a3b8', elStroke: '#475569', bgColor: '#475569',
+                coreColorStart: 'bg-slate-700/80', coreColorEnd: 'bg-red-600',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-red-500/50',
+                stateColorStart: 'text-blue-400', stateColorEnd: 'text-red-400',
+                descBefore: 'Zn tiene 2 electrones de valencia', descAfter: 'Zn²⁺ perdió 2 electrones'
+            },
+            right: {
+                symbolBefore: 'CuSO₄', symbolAfter: 'Cu',
+                coreSymbolBefore: 'Cu', coreSymbolAfter: 'Cu',
+                titleBefore: 'Ion de Cobre', titleAfter: 'Átomo de Cobre',
+                stateStart: '+2', stateEnd: '0', shells: [2, 8, 17], staticElectrons: [],
+                elColor: '#60a5fa', elStroke: '#2563eb', bgColor: '#3b82f6',
+                coreColorStart: 'bg-blue-600/30', coreColorEnd: 'bg-orange-500',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-orange-500/50',
+                stateColorStart: 'text-blue-400', stateColorEnd: 'text-slate-300',
+                descBefore: 'Cu²⁺ le faltan 2 electrones', descAfter: 'Cu ganó 2 electrones'
+            },
+            eq: {
+                l1Name: 'Zn', l1State: '0', l1Color: 'text-blue-400',
+                l2Name: 'CuSO₄', l2State: '+2', l2Color: 'text-blue-400',
+                r1Name: 'ZnSO₄', r1State: '+2', r1Color: 'text-slate-600',
+                r2Name: 'Cu', r2State: '0', r2Color: 'text-slate-600',
+                showPlusRight: true
+            },
+            transfer: [
+                { startR: 48, endR: 38.66, angle: -Math.PI / 4, endIdx: 2 }, // va al nivel 3 de Cu
+                { startR: 48, endR: 48, angle: -Math.PI / 8, endIdx: 3 }      // va al nivel 4 de Cu
+            ],
+            panel3: {
+                lTitle: 'ZINC', lDesc: 'Pierde 2 electrones', lType: 'Se oxida', lTypeColor: 'text-red-400',
+                rTitle: 'COBRE', rDesc: 'Gana 2 electrones', rType: 'Se reduce', rTypeColor: 'text-green-400'
+            },
+            panel4: {
+                ox: 'Zn → <span class="text-red-400 font-bold">Zn²⁺ + 2e⁻</span>', oxMul: '',
+                red: '<span class="text-green-400 font-bold">Cu²⁺ + 2e⁻</span> → Cu', redMul: ''
+            },
+            panel5: {
+                ox: '<span class="font-bold text-blue-400">Cu²⁺</span> <span class="text-slate-500 text-[10px] font-sans">(se reduce)</span>',
+                red: '<span class="font-bold text-slate-300">Zn</span> <span class="text-slate-500 text-[10px] font-sans">(se oxida)</span>'
+            },
+            panel7: {
+                desc: '',
+                lost: '2 e⁻', gained: '2 e⁻', lostTextCls: 'text-red-500 font-bold text-lg', gainedTextCls: 'text-green-500 font-bold text-lg'
+            },
+            btnStyle: { bg: 'bg-slate-800', border: 'border-blue-500' }
+        },
+        'na-cl': {
+            id: 'na-cl',
+            left: {
+                symbol: 'Na', coreSymbolAfter: 'Na⁺',
+                titleBefore: 'Átomo de Sodio', titleAfter: 'Ion de Sodio',
+                stateStart: '0', stateEnd: '+1', shells: [2, 8], staticElectrons: [],
+                elColor: '#4ade80', elStroke: '#16a34a', bgColor: '#22c55e',
+                coreColorStart: 'bg-slate-700/80', coreColorEnd: 'bg-green-500',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-green-500/50',
+                stateColorStart: 'text-green-400', stateColorEnd: 'text-green-400',
+                descBefore: 'Na tiene 1 e⁻ de valencia', descAfter: 'Na⁺ perdió 1 electrón'
+            },
+            right: {
+                symbolBefore: 'Cl₂', symbolAfter: 'Cl⁻',
+                coreSymbolBefore: 'Cl', coreSymbolAfter: 'Cl⁻',
+                titleBefore: 'Átomo de Cloro', titleAfter: 'Ion de Cloro',
+                stateStart: '0', stateEnd: '-1', shells: [2, 8], staticElectrons: [-45, 0, 45, 90, 135, 180, 225],
+                elColor: '#f87171', elStroke: '#dc2626', bgColor: '#ef4444',
+                coreColorStart: 'bg-red-600/30', coreColorEnd: 'bg-red-500',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-red-500/50',
+                stateColorStart: 'text-red-400', stateColorEnd: 'text-red-400',
+                descBefore: 'Cl le falta 1 e⁻ para el octeto', descAfter: 'Cl⁻ ganó 1 electrón'
+            },
+            eq: {
+                l1Name: '2Na', l1State: '0', l1Color: 'text-green-400',
+                l2Name: 'Cl₂', l2State: '0', l2Color: 'text-red-400',
+                r1Name: '2Na', r1State: '+1', r1Color: 'text-green-500',
+                r2Name: 'Cl', r2State: '-1', r2Color: 'text-red-500',
+                showPlusRight: false
+            },
+            transfer: [
+                { startR: 48, endR: 48, angle: -Math.PI / 2, endIdx: 2 } // va al nivel 3 de Cl (que ya tiene 7, falta 1)
+            ],
+            panel3: {
+                lTitle: 'SODIO', lDesc: 'Pierde 1 electrón', lType: 'Se oxida', lTypeColor: 'text-green-400',
+                rTitle: 'CLORO', rDesc: 'Gana 1 electrón', rType: 'Se reduce', rTypeColor: 'text-red-400'
+            },
+            panel4: {
+                ox: 'Na → <span class="text-green-400 font-bold">Na⁺ + 1e⁻</span>', oxMul: '(Balance: 2Na → <span class="text-green-400 font-bold">2Na⁺ + 2e⁻</span>)',
+                red: '<span class="text-red-400 font-bold">Cl₂ + 2e⁻</span> → 2Cl⁻', redMul: ''
+            },
+            panel5: {
+                ox: '<span class="font-bold text-red-400">Cl<sub class="text-[8px]">2</sub></span> <span class="text-slate-500 text-[10px] font-sans">(se reduce)</span>',
+                red: '<span class="font-bold text-green-400">Na</span> <span class="text-slate-500 text-[10px] font-sans">(se oxida)</span>'
+            },
+            panel7: {
+                desc: 'En el proceso global intervienen 2 electrones en total:<br>1. Cada uno de los dos átomos de sodio entrega 1 e⁻.<br>2. La molécula de cloro (Cl₂) acepta esos 2 e⁻ (uno cada átomo).',
+                lost: '2 &times; 1e⁻ = 2e⁻', gained: '1 &times; 2e⁻ = 2e⁻',
+                lostTextCls: 'text-green-500 font-bold text-sm md:text-base', gainedTextCls: 'text-red-500 font-bold text-sm md:text-base'
+            },
+            btnStyle: { bg: 'bg-slate-800', border: 'border-green-500' }
+        },
+        'fe-cu': {
+            id: 'fe-cu',
+            left: {
+                symbol: 'Fe', coreSymbolAfter: 'Fe²⁺',
+                titleBefore: 'Átomo de Hierro', titleAfter: 'Ion de Hierro',
+                stateStart: '0', stateEnd: '+2', shells: [2, 8, 14], staticElectrons: [],
+                elColor: '#cbd5e1', elStroke: '#94a3b8', bgColor: '#94a3b8',
+                coreColorStart: 'bg-slate-700/80', coreColorEnd: 'bg-amber-600',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-amber-500/50',
+                stateColorStart: 'text-amber-400', stateColorEnd: 'text-amber-400',
+                descBefore: 'Fe transfiere 2 e⁻', descAfter: 'Fe²⁺ perdió 2 electrones'
+            },
+            right: {
+                symbolBefore: 'CuSO₄', symbolAfter: 'Cu',
+                coreSymbolBefore: 'Cu', coreSymbolAfter: 'Cu',
+                titleBefore: 'Ion de Cobre', titleAfter: 'Átomo de Cobre',
+                stateStart: '+2', stateEnd: '0', shells: [2, 8, 17], staticElectrons: [],
+                elColor: '#60a5fa', elStroke: '#2563eb', bgColor: '#3b82f6',
+                coreColorStart: 'bg-blue-600/30', coreColorEnd: 'bg-orange-500',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-orange-500/50',
+                stateColorStart: 'text-blue-400', stateColorEnd: 'text-slate-300',
+                descBefore: 'Cu²⁺ le faltan 2 electrones', descAfter: 'Cu ganó 2 electrones'
+            },
+            eq: {
+                l1Name: 'Fe', l1State: '0', l1Color: 'text-blue-400',
+                l2Name: 'CuSO₄', l2State: '+2', l2Color: 'text-blue-400',
+                r1Name: 'FeSO₄', r1State: '+2', r1Color: 'text-slate-600',
+                r2Name: 'Cu', r2State: '0', r2Color: 'text-slate-600',
+                showPlusRight: true
+            },
+            transfer: [
+                { startR: 48, endR: 38.66, angle: -Math.PI / 4, endIdx: 2 }, // va al nivel 3 de Cu
+                { startR: 48, endR: 48, angle: -Math.PI / 8, endIdx: 3 }      // va al nivel 4 de Cu
+            ],
+            panel3: {
+                lTitle: 'HIERRO', lDesc: 'Pierde 2 electrones', lType: 'Se oxida', lTypeColor: 'text-amber-400',
+                rTitle: 'COBRE', rDesc: 'Gana 2 electrones', rType: 'Se reduce', rTypeColor: 'text-green-400'
+            },
+            panel4: {
+                ox: 'Fe → <span class="text-amber-400 font-bold">Fe²⁺ + 2e⁻</span>', oxMul: '',
+                red: '<span class="text-green-400 font-bold">Cu²⁺ + 2e⁻</span> → Cu', redMul: ''
+            },
+            panel5: {
+                ox: '<span class="font-bold text-blue-400">Cu²⁺</span> <span class="text-slate-500 text-[10px] font-sans">(se reduce)</span>',
+                red: '<span class="font-bold text-slate-300">Fe</span> <span class="text-slate-500 text-[10px] font-sans">(se oxida)</span>'
+            },
+            panel7: {
+                desc: '',
+                lost: '2 e⁻', gained: '2 e⁻', lostTextCls: 'text-amber-500 font-bold text-lg', gainedTextCls: 'text-green-500 font-bold text-lg'
+            },
+            btnStyle: { bg: 'bg-slate-800', border: 'border-amber-500' }
+        },
+        'mg-o2': {
+            id: 'mg-o2',
+            left: {
+                symbol: 'Mg', coreSymbolAfter: 'Mg²⁺',
+                titleBefore: 'Magnesio', titleAfter: 'Ion de Magnesio',
+                stateStart: '0', stateEnd: '+2', shells: [2, 8], staticElectrons: [],
+                elColor: '#cbd5e1', elStroke: '#94a3b8', bgColor: '#94a3b8',
+                coreColorStart: 'bg-slate-600/80', coreColorEnd: 'bg-slate-500',
+                atomBorderStart: 'border-slate-500', atomBorderEnd: 'border-slate-400/50',
+                stateColorStart: 'text-slate-300', stateColorEnd: 'text-slate-300',
+                descBefore: 'Mg tiene 2 electrones de valencia', descAfter: 'Mg²⁺ perdió 2 electrones'
+            },
+            right: {
+                symbolBefore: 'O₂', symbolAfter: 'O²⁻',
+                coreSymbolBefore: 'O', coreSymbolAfter: 'O²⁻',
+                titleBefore: 'Átomo de Oxígeno (de O₂)', titleAfter: 'Ion Óxido',
+                stateStart: '0', stateEnd: '-2', shells: [2], staticElectrons: [45, 90, 135, 180, 225, 270],
+                elColor: '#f87171', elStroke: '#dc2626', bgColor: '#ef4444',
+                coreColorStart: 'bg-red-600/30', coreColorEnd: 'bg-red-500',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-red-500/50',
+                stateColorStart: 'text-red-400', stateColorEnd: 'text-red-400',
+                descBefore: 'O le faltan 2 electrones para ser estable', descAfter: 'O²⁻ ganó 2 electrones'
+            },
+            eq: {
+                l1Name: '2Mg', l1State: '0', l1Color: 'text-slate-300',
+                l2Name: 'O₂', l2State: '0', l2Color: 'text-red-400',
+                r1Name: '2Mg', r1State: '+2', r1Color: 'text-slate-400',
+                r2Name: '2O', r2State: '-2', r2Color: 'text-red-500',
+                showPlusRight: false
+            },
+            transfer: [
+                { startR: 48, endR: 48, angle: -Math.PI / 4, endIdx: 1 },
+                { startR: 48, endR: 48, angle: 0, endIdx: 1 }
+            ],
+            panel3: {
+                lTitle: 'MAGNESIO', lDesc: 'Pierde 2 electrones', lType: 'Se oxida', lTypeColor: 'text-slate-300',
+                rTitle: 'OXÍGENO', rDesc: 'Gana 2 electrones', rType: 'Se reduce', rTypeColor: 'text-red-400'
+            },
+            panel4: {
+                ox: 'Mg → <span class="text-slate-300 font-bold">Mg²⁺ + 2e⁻</span>', oxMul: '(Balance: 2Mg → <span class="text-slate-300 font-bold">2Mg²⁺ + 4e⁻</span>)',
+                red: '<span class="text-red-400 font-bold">O₂ + 4e⁻</span> → 2O²⁻', redMul: ''
+            },
+            panel5: {
+                ox: '<span class="font-bold text-red-400">O<sub class="text-[8px]">2</sub></span> <span class="text-slate-500 text-[10px] font-sans">(se reduce)</span>',
+                red: '<span class="font-bold text-slate-300">Mg</span> <span class="text-slate-500 text-[10px] font-sans">(se oxida)</span>'
+            },
+            panel7: {
+                desc: '',
+                lost: '4 e⁻', gained: '4 e⁻', lostTextCls: 'text-slate-400 font-bold text-lg', gainedTextCls: 'text-red-500 font-bold text-lg'
+            },
+            btnStyle: { bg: 'bg-slate-900', border: 'border-slate-500' }
+        },
+        'cu-cl2': {
+            id: 'cu-cl2',
+            left: {
+                symbol: 'Cu', coreSymbolAfter: 'Cu⁺',
+                titleBefore: 'Cobre', titleAfter: 'Ion de Cobre',
+                stateStart: '0', stateEnd: '+1', shells: [2, 8, 18], staticElectrons: [],
+                elColor: '#cbd5e1', elStroke: '#94a3b8', bgColor: '#94a3b8',
+                coreColorStart: 'bg-orange-600/80', coreColorEnd: 'bg-orange-500',
+                atomBorderStart: 'border-slate-500', atomBorderEnd: 'border-orange-500/50',
+                stateColorStart: 'text-orange-300', stateColorEnd: 'text-orange-300',
+                descBefore: 'Cu tiene 1 electrón de valencia', descAfter: 'Cu⁺ perdió 1 electrón'
+            },
+            right: {
+                symbolBefore: 'Cl₂', symbolAfter: 'Cl⁻',
+                coreSymbolBefore: 'Cl', coreSymbolAfter: 'Cl⁻',
+                titleBefore: 'Átomo de Cloro (de Cl₂)', titleAfter: 'Ion Cloruro',
+                stateStart: '0', stateEnd: '-1', shells: [2, 8], staticElectrons: [-45, 0, 45, 90, 135, 180, 225],
+                elColor: '#86efac', elStroke: '#22c55e', bgColor: '#22c55e',
+                coreColorStart: 'bg-green-600/30', coreColorEnd: 'bg-green-500',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-green-500/50',
+                stateColorStart: 'text-green-400', stateColorEnd: 'text-green-400',
+                descBefore: 'Cl le falta 1 electrón para ser estable', descAfter: 'Cl⁻ ganó 1 electrón'
+            },
+            eq: {
+                l1Name: '2Cu', l1State: '0', l1Color: 'text-orange-300',
+                l2Name: 'Cl₂', l2State: '0', l2Color: 'text-green-400',
+                r1Name: '2Cu', r1State: '+1', r1Color: 'text-orange-400',
+                r2Name: '2Cl', r2State: '-1', r2Color: 'text-green-500',
+                showPlusRight: false
+            },
+            transfer: [
+                { startR: 48, endR: 48, angle: -Math.PI / 2, endIdx: 2 }
+            ],
+            panel3: {
+                lTitle: 'COBRE', lDesc: 'Pierde 1 electrón (por átomo)', lType: 'Se oxida', lTypeColor: 'text-orange-400',
+                rTitle: 'CLORO', rDesc: 'Gana 1 electrón (por átomo)', rType: 'Se reduce', rTypeColor: 'text-green-400'
+            },
+            panel4: {
+                ox: '2Cu⁰ → <span class="text-orange-400 font-bold">2Cu⁺ + 2e⁻</span>', oxMul: '(Cu⁰ → Cu⁺ + 1e⁻)',
+                red: '<span class="text-green-400 font-bold">Cl₂⁰ + 2e⁻</span> → 2Cl⁻', redMul: ''
+            },
+            panel5: {
+                ox: '<span class="font-bold text-green-400">Cl₂</span> <span class="text-slate-500 text-[10px] font-sans">(se reduce)</span>',
+                red: '<span class="font-bold text-orange-400">Cu</span> <span class="text-slate-500 text-[10px] font-sans">(se oxida)</span>'
+            },
+            panel7: {
+                desc: '2 e⁻ transferidos en total',
+                lost: '2', lostTextCls: 'text-orange-400 font-mono text-2xl md:text-3xl font-bold',
+                gained: '2', gainedTextCls: 'text-green-400 font-mono text-2xl md:text-3xl font-bold'
+            },
+            btnStyle: { bg: 'bg-slate-900', border: 'border-orange-500/50' }
+        },
+        'mg-f2': {
+            id: 'mg-f2',
+            left: {
+                symbol: 'Mg', coreSymbolAfter: 'Mg²⁺',
+                titleBefore: 'Magnesio', titleAfter: 'Ion de Magnesio',
+                stateStart: '0', stateEnd: '+2', shells: [2, 8], staticElectrons: [],
+                elColor: '#cbd5e1', elStroke: '#94a3b8', bgColor: '#94a3b8',
+                coreColorStart: 'bg-slate-700/80', coreColorEnd: 'bg-slate-500',
+                atomBorderStart: 'border-slate-500', atomBorderEnd: 'border-slate-400/50',
+                stateColorStart: 'text-slate-300', stateColorEnd: 'text-slate-300',
+                descBefore: 'Mg tiene 2 electrones de valencia', descAfter: 'Mg²⁺ perdió 2 electrones'
+            },
+            right: {
+                symbolBefore: 'F₂', symbolAfter: 'F⁻',
+                coreSymbolBefore: 'F', coreSymbolAfter: 'F⁻',
+                titleBefore: 'Átomo de Flúor (de F₂)', titleAfter: 'Ion Fluoruro',
+                stateStart: '0', stateEnd: '-1', shells: [2], staticElectrons: [-45, 0, 45, 90, 135, 180, 225],
+                elColor: '#fde047', elStroke: '#eab308', bgColor: '#eab308',
+                coreColorStart: 'bg-yellow-600/30', coreColorEnd: 'bg-yellow-500',
+                atomBorderStart: 'border-slate-600', atomBorderEnd: 'border-yellow-500/50',
+                stateColorStart: 'text-yellow-400', stateColorEnd: 'text-yellow-400',
+                descBefore: 'A cada F le falta 1 electrón para ser estable', descAfter: 'F⁻ ganó 1 electrón'
+            },
+            eq: {
+                l1Name: 'Mg', l1State: '0', l1Color: 'text-slate-300',
+                l2Name: 'F₂', l2State: '0', l2Color: 'text-yellow-400',
+                r1Name: 'Mg', r1State: '+2', r1Color: 'text-slate-400',
+                r2Name: '2F', r2State: '-1', r2Color: 'text-yellow-500',
+                showPlusRight: false
+            },
+            transfer: [
+                { targetId: 'atom-2', startR: 48, endR: 48, startAngle: -Math.PI / 4, angle: -Math.PI / 2, endIdx: 1 },
+                { targetId: 'atom-3', startR: 48, endR: 48, startAngle: Math.PI + Math.PI / 4, angle: -Math.PI / 2, endIdx: 1 }
+            ],
+            panel3: {
+                lTitle: 'MAGNESIO', lDesc: 'Pierde 2 electrones', lType: 'Se oxida', lTypeColor: 'text-slate-300',
+                rTitle: 'FLÚOR', rDesc: 'Gana 1 electrón (por átomo)', rType: 'Se reduce', rTypeColor: 'text-yellow-400'
+            },
+            panel4: {
+                ox: 'Mg⁰ → <span class="text-slate-400 font-bold">Mg²⁺ + 2e⁻</span>', oxMul: '',
+                red: '<span class="text-yellow-400 font-bold">F₂⁰ + 2e⁻</span> → 2F⁻', redMul: ''
+            },
+            panel5: {
+                ox: '<span class="font-bold text-yellow-400">F₂</span> <span class="text-slate-500 text-[10px] font-sans">(se reduce)</span>',
+                red: '<span class="font-bold text-slate-400">Mg</span> <span class="text-slate-500 text-[10px] font-sans">(se oxida)</span>'
+            },
+            panel7: {
+                desc: '2 e⁻ transferidos en total',
+                lost: '2', lostTextCls: 'text-slate-300 font-mono text-2xl md:text-3xl font-bold',
+                gained: '2', gainedTextCls: 'text-yellow-400 font-mono text-2xl md:text-3xl font-bold'
+            },
+            btnStyle: { bg: 'bg-slate-900', border: 'border-yellow-500/50' }
+        }
+    };
+
     // Helper para marcar los pasos
     const setActiveStep = (stepNumber) => {
-        // Reset all steps to inactive style
-        for (let i = 1; i <= 6; i++) {
+        for (let i = 1; i <= 7; i++) {
             const stepEl = document.getElementById(`step-${i}`);
-            if (stepEl) {
-                stepEl.className = "px-2 py-1 text-slate-400 rounded-full font-sans font-medium transition-colors duration-500";
-            }
+            if (stepEl) stepEl.className = "px-2 py-1 text-slate-400 rounded-full font-sans font-medium transition-colors duration-500";
         }
-        // Set target step to active style
         const targetStep = document.getElementById(`step-${stepNumber}`);
-        if (targetStep) {
-            targetStep.className = "px-3 py-1 bg-indigo-600 text-white rounded-full font-sans font-medium transition-colors duration-500";
-        }
+        if (targetStep) targetStep.className = "px-3 py-1 bg-indigo-600 text-white rounded-full font-sans font-medium transition-colors duration-500";
     };
 
     // Helper para revelar paneles
@@ -33,11 +344,10 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 placeholder.style.display = 'none';
                 content.style.opacity = '1';
-            }, 500); // Esperar que termine la transición de opacidad
+            }, 500);
         }
     };
 
-    // Función para emitir un pequeño rayo o chispa desde el electrón
     const createSpark = (container, sourceRect, isTrailing) => {
         const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svg.style.position = "absolute";
@@ -51,8 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const containerRect = container.getBoundingClientRect();
         const x1 = sourceRect.left - containerRect.left + sourceRect.width / 2;
         const y1 = sourceRect.top - containerRect.top + sourceRect.height / 2;
-        
-        // Si isTrailing es true, la chispa va hacia la izquierda (dejando un rastro)
+
         const angle = isTrailing ? (Math.PI - 0.5 + Math.random()) : (Math.random() * Math.PI * 2);
         const distance = 15 + Math.random() * 30;
         const x2 = x1 + Math.cos(angle) * distance;
@@ -60,23 +369,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
         let d = `M ${x1} ${y1} `;
-        
-        const midX = (x1 + x2)/2 + (Math.random() - 0.5)*20;
-        const midY = (y1 + y2)/2 + (Math.random() - 0.5)*20;
+
+        const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * 20;
+        const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * 20;
         d += `L ${midX} ${midY} L ${x2} ${y2}`;
 
         path.setAttribute("d", d);
         path.setAttribute("fill", "none");
-        path.setAttribute("stroke", "#c084fc"); // Morado/Azulado como en la referencia
+        path.setAttribute("stroke", "#c084fc");
         path.setAttribute("stroke-width", "2");
         path.style.filter = "drop-shadow(0 0 4px #a855f7)";
-        
+
         svg.appendChild(path);
         container.appendChild(svg);
         return svg;
     };
 
-    // Añadir estilos para que los electrones lleven la electricidad y giren
     const style = document.createElement('style');
     style.innerHTML = `
         @keyframes electron-spark {
@@ -104,25 +412,34 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 
-    let currentReaction = ''; // Puede ser 'zn-cu' o 'na-cl'
+    let currentReaction = '';
+    let currentAnimFrame = null;
+    let currentSparkInterval = null;
+    let currentTimeout = null;
 
-    const btnZn = document.getElementById('btn-react-zn');
-    const btnNa = document.getElementById('btn-react-na');
-
-    // Función para crear las capas internas de Bohr que giran
     const createBohrBackground = (innerShells, staticValenceElectrons, color, elColor, elStroke) => {
         let svg = `<svg viewBox="-50 -50 100 100" class="absolute inset-0 w-full h-full pointer-events-none z-0">`;
         const totalShells = innerShells.length;
-        
-        const step = 22 / Math.max(1, totalShells); 
+        const step = 22 / Math.max(1, totalShells);
 
         innerShells.forEach((count, idx) => {
             const r = 24 + step * idx;
             svg += `<circle r="${r}" fill="none" stroke="${color}" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.6" />`;
             const spinClass = idx % 2 === 0 ? 'spin-slow' : 'spin-slow-reverse';
             svg += `<g class="${spinClass}" style="transform-origin: 0px 0px;">`;
-            for(let i=0; i<count; i++) {
-                const angle = (Math.PI * 2 / count) * i;
+            let maxElectrons = count;
+            if (count === 17 && idx === 2) maxElectrons = 18;
+            if (count === 6 && idx === 1) maxElectrons = 8; // Oxígeno: capa de 8 pero tiene 6
+            if (count === 7 && idx === 2) maxElectrons = 8; // Cloro: capa de 8 pero tiene 7
+
+            for (let i = 0; i < maxElectrons; i++) {
+                if (count === 17 && idx === 2 && i === 0) continue; // Hueco en i=0
+                if (count === 6 && idx === 1 && (i === 0 || i === 7)) continue; // Huecos en i=0 (0rad) y i=7 (-PI/4 rad)
+                if (count === 7 && idx === 2 && i === 7) continue; // Hueco en i=7 (-PI/4 rad)
+
+                let angle = (Math.PI * 2 / maxElectrons) * i;
+                if (count === 17 && idx === 2) angle -= Math.PI / 4; // Rota para que el hueco quede en -PI/4
+
                 const cx = r * Math.cos(angle);
                 const cy = r * Math.sin(angle);
                 svg += `<circle cx="${cx}" cy="${cy}" r="1.5" fill="${elColor}" stroke="${elStroke}" stroke-width="0.5" />`;
@@ -130,17 +447,17 @@ document.addEventListener('DOMContentLoaded', () => {
             svg += `</g>`;
         });
 
-        // Capa de valencia exterior
-        svg += `<circle r="48" fill="none" stroke="${color}" stroke-width="1" stroke-dasharray="3 3" opacity="0.4" />`;
-
         if (staticValenceElectrons && staticValenceElectrons.length > 0) {
-            const r = 48; // Radio exterior estático
+            const r = 48;
+            const spinClass = totalShells % 2 === 0 ? 'spin-slow' : 'spin-slow-reverse';
+            svg += `<g class="${spinClass}" style="transform-origin: 0px 0px;">`;
             staticValenceElectrons.forEach(angleDeg => {
                 const angle = angleDeg * Math.PI / 180;
                 const cx = r * Math.cos(angle);
                 const cy = r * Math.sin(angle);
                 svg += `<circle cx="${cx}" cy="${cy}" r="2" fill="${elColor}" stroke="${elStroke}" stroke-width="0.5" />`;
             });
+            svg += `</g>`;
         }
         svg += `</svg>`;
         return svg;
@@ -155,6 +472,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const resetUI = () => {
+        if (currentAnimFrame) cancelAnimationFrame(currentAnimFrame);
+        if (currentSparkInterval) clearInterval(currentSparkInterval);
+        if (currentTimeout) clearTimeout(currentTimeout);
+        currentAnimFrame = null;
+        currentSparkInterval = null;
+        currentTimeout = null;
+        
         reaccionIniciada = false;
         btnIniciar.disabled = false;
         btnIniciar.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -164,16 +488,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </svg>
             INICIAR REACCIÓN
         `;
-        
-        document.getElementById('electron-1').style.transform = '';
-        document.getElementById('electron-1').classList.remove('electrified');
-        document.getElementById('electron-2').style.transform = '';
-        document.getElementById('electron-2').classList.remove('electrified');
-        
-        document.getElementById('hole-1').style.opacity = '1';
-        document.getElementById('hole-2').style.opacity = '1';
 
-        for(let i=3; i<=7; i++) {
+        for (let i = 3; i <= 7; i++) {
             const placeholder = document.getElementById(`panel${i}-placeholder`);
             const content = document.getElementById(`panel${i}-content`);
             if (placeholder && content) {
@@ -182,249 +498,243 @@ document.addEventListener('DOMContentLoaded', () => {
                 content.style.opacity = '0';
             }
         }
-        
+
         setActiveStep(1);
     };
 
-    // Cambiar de reacción
     const setReaction = (reactionId) => {
         if (currentReaction === reactionId && !reaccionIniciada) return;
-        
+
         resetUI();
         currentReaction = reactionId;
+        const data = REACTIONS_CATALOG[reactionId];
 
-        // Estilos de botones
-        if (reactionId === 'zn-cu') {
-            btnZn.classList.replace('bg-slate-900', 'bg-slate-800');
-            btnZn.classList.replace('border-slate-700', 'border-blue-500');
-            btnNa.classList.replace('bg-slate-800', 'bg-slate-900');
-            btnNa.classList.replace('border-orange-500', 'border-slate-700');
-            
-            // Textos globales
-            document.getElementById('eq-l1-name').innerText = 'Zn';
-            document.getElementById('eq-l1-state').innerText = '0';
-            document.getElementById('eq-l1-state').className = "text-blue-400 text-[11px] font-bold mb-1 transition-colors duration-1000";
-            document.getElementById('eq-l2-name').innerText = 'CuSO₄';
-            document.getElementById('eq-l2-state').innerText = '+2';
-            document.getElementById('eq-l2-state').className = "text-blue-400 text-[11px] font-bold mb-1 transition-colors duration-1000";
-            document.getElementById('eq-r1-name').innerText = 'ZnSO₄';
-            document.getElementById('eq-r1-state').innerText = '+2';
-            document.getElementById('eq-r1-state').className = "text-slate-600 text-[11px] font-bold mb-1 transition-colors duration-1000";
-            document.getElementById('eq-r2-name').innerText = 'Cu';
-            document.getElementById('eq-r2-state').innerText = '0';
-            document.getElementById('eq-r2-state').className = "text-slate-600 text-[11px] font-bold mb-1 transition-colors duration-1000";
-            
-            document.getElementById('eq-plus-right').style.display = 'inline';
-            document.getElementById('right-side-eq').className = 'flex items-end gap-2 md:gap-6';
-            
-            // Átomo 1 (Zn)
-            document.getElementById('lbl-1-title').innerText = 'Átomo de Zinc';
-            document.getElementById('core-1').innerText = 'Zn';
-            document.getElementById('core-1').className = "w-10 h-10 rounded-full bg-slate-700/80 flex items-center justify-center text-xs font-bold text-slate-300 shadow-inner transition-colors duration-1000 z-10";
-            document.getElementById('atom-1').className = "w-[100px] h-[100px] rounded-full border border-slate-600 border-dashed flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000";
-            
-            // Fondo Bohr Zn (2, 8, 18)
-            const bgZn = createBohrBackground([2, 8, 18], [], '#475569', '#94a3b8', '#475569');
-            
-            // Átomo 2 (Cu)
-            document.getElementById('lbl-2-title').innerText = 'Ion de Cobre';
-            document.getElementById('core-2').innerText = 'Cu';
-            document.getElementById('core-2').className = "w-10 h-10 rounded-full bg-blue-600/30 flex items-center justify-center text-xs font-bold text-blue-200 shadow-inner transition-colors duration-1000 z-10";
-            document.getElementById('atom-2').className = "w-[100px] h-[100px] rounded-full border border-slate-600 border-dashed flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000";
-            
-            // Fondo Bohr Cu2+ (2, 8, 17)
-            const bgCu = createBohrBackground([2, 8, 17], [], '#3b82f6', '#60a5fa', '#2563eb');
+        // Panel 1: Botones
+        ['zn', 'na', 'fe-cu', 'mg-o2'].forEach(id => {
+            const btn = document.getElementById(`btn-react-${id}`);
+            if (!btn) return;
+            const fullId = id === 'zn' ? 'zn-cu' : (id === 'na' ? 'na-cl' : id);
+            if (fullId === reactionId) {
+                btn.className = `flex items-center justify-between p-2.5 rounded transition text-left ${data.btnStyle.bg} border ${data.btnStyle.border}`;
+            } else {
+                btn.className = `flex items-center justify-between p-2.5 bg-slate-900 border border-slate-700 rounded hover:bg-slate-800 transition text-left`;
+            }
+        });
 
-            // Inyectar SVGs en el panel central
-            injectBohrBg('atom-1', bgZn);
-            injectBohrBg('atom-2', bgCu);
-            
-            // Inyectar SVGs en el Panel 6 (tamaño ajustado automáticamente por viewBox)
-            injectBohrBg('p6-l-atom-before', bgZn);
-            injectBohrBg('p6-r-atom-before', bgCu);
-            injectBohrBg('p6-l-atom-after', bgZn);
-            injectBohrBg('p6-r-atom-after', bgCu);
-            
-            // 2 electrones visibles
-            document.getElementById('electron-2').style.display = 'block';
-            document.getElementById('hole-2').style.display = 'block';
-            
-            // Textos del panel 3, 4, 5, 6, 7
-            document.getElementById('p3-l-title').innerText = 'ZINC';
-            document.getElementById('p3-r-title').innerText = 'COBRE';
-            document.getElementById('p3-l-start').innerText = '0';
-            document.getElementById('p3-l-end').innerText = '+2';
-            document.getElementById('p3-l-desc').innerText = 'Pierde 2 electrones';
-            document.getElementById('p3-r-start').innerText = '+2';
-            document.getElementById('p3-r-end').innerText = '0';
-            document.getElementById('p3-r-desc').innerText = 'Gana 2 electrones';
-            
-            document.getElementById('p4-ox').innerHTML = 'Zn → <span class="text-red-400 font-bold">Zn²⁺ + 2e⁻</span>';
-            document.getElementById('p4-ox-mul').classList.add('hidden');
-            document.getElementById('p4-red').innerHTML = '<span class="text-green-400 font-bold">Cu²⁺ + 2e⁻</span> → Cu';
-            document.getElementById('p4-red-mul').classList.add('hidden');
-            
-            document.getElementById('p5-ox').innerHTML = '<span class="font-bold text-blue-400">CuSO₄</span> <span class="text-slate-500 text-[10px] font-sans">(se reduce)</span>';
-            document.getElementById('p5-red').innerHTML = '<span class="font-bold text-slate-300">Zn</span> <span class="text-slate-500 text-[10px] font-sans">(se oxida)</span>';
-            
-            document.getElementById('p6-desc-l-before').innerText = 'Zn tiene 2 electrones de valencia';
-            document.getElementById('p6-desc-r-before').innerText = 'Cu²⁺ le faltan 2 electrones';
-            document.getElementById('p6-desc-l-after').innerText = 'Zn²⁺ perdió 2 electrones';
-            document.getElementById('p6-desc-r-after').innerText = 'Cu ganó 2 electrones';
-            
-            // Colores panel 6 (Zn/Cu)
-            document.getElementById('p6-l-title-before').innerText = 'Átomo de Zinc';
-            document.getElementById('p6-l-core-before').innerText = 'Zn';
-            document.getElementById('p6-l-core-before').className = 'w-6 h-6 rounded-full bg-slate-600 shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white';
-            document.getElementById('p6-r-title-before').innerText = 'Ion de Cobre';
-            document.getElementById('p6-r-core-before').innerText = 'Cu';
-            document.getElementById('p6-r-core-before').className = 'w-6 h-6 rounded-full bg-blue-600 shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white';
-            
-            document.getElementById('p6-l-e1').style.display = 'block';
-            document.getElementById('p6-l-e2').style.display = 'block';
-            document.getElementById('p6-l-e3').style.display = 'none';
-            document.getElementById('p6-l-e4').style.display = 'none';
+        // Panel 2: Ecuación
+        document.getElementById('eq-l1-name').innerText = data.eq.l1Name;
+        document.getElementById('eq-l1-state').innerText = data.eq.l1State;
+        document.getElementById('eq-l1-state').className = `${data.eq.l1Color} text-[11px] font-bold mb-1 transition-colors duration-1000`;
 
-            document.getElementById('p6-l-title-after').innerText = 'Ion de Zinc';
-            document.getElementById('p6-l-core-after').innerText = 'Zn';
-            document.getElementById('p6-l-core-after').className = 'w-6 h-6 rounded-full bg-red-600 shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white';
-            document.getElementById('p6-r-title-after').innerText = 'Átomo de Cobre';
-            document.getElementById('p6-r-core-after').innerText = 'Cu';
-            document.getElementById('p6-r-core-after').className = 'w-6 h-6 rounded-full bg-orange-500 shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white';
-            
-            document.getElementById('p6-r-e1').style.display = 'block';
-            document.getElementById('p6-r-e2').style.display = 'block';
-            document.getElementById('p6-r-e3').style.display = 'none';
-            document.getElementById('p6-r-e4').style.display = 'none';
-            
-            document.getElementById('p7-desc').style.display = 'none';
-            document.getElementById('p7-lost').innerHTML = '2 e⁻';
-            document.getElementById('p7-gained').innerHTML = '2 e⁻';
-            
-        } else if (reactionId === 'na-cl') {
-            btnNa.classList.replace('bg-slate-900', 'bg-slate-800');
-            btnNa.classList.replace('border-slate-700', 'border-green-500');
-            btnZn.classList.replace('bg-slate-800', 'bg-slate-900');
-            btnZn.classList.replace('border-blue-500', 'border-slate-700');
-            
-            // Textos globales
-            document.getElementById('eq-l1-name').innerText = '2Na';
-            document.getElementById('eq-l1-state').innerText = '0';
-            document.getElementById('eq-l1-state').className = "text-green-400 text-[11px] font-bold mb-1 transition-colors duration-1000";
-            document.getElementById('eq-l2-name').innerText = 'Cl₂';
-            document.getElementById('eq-l2-state').innerText = '0';
-            document.getElementById('eq-l2-state').className = "text-red-400 text-[11px] font-bold mb-1 transition-colors duration-1000";
-            document.getElementById('eq-r1-name').innerText = '2Na';
-            document.getElementById('eq-r1-state').innerText = '+1';
-            document.getElementById('eq-r1-state').className = "text-green-500 text-[11px] font-bold mb-1 transition-colors duration-1000";
-            document.getElementById('eq-r2-name').innerText = 'Cl';
-            document.getElementById('eq-r2-state').innerText = '-1';
-            document.getElementById('eq-r2-state').className = "text-red-500 text-[11px] font-bold mb-1 transition-colors duration-1000";
-            
-            document.getElementById('eq-plus-right').style.display = 'none';
-            document.getElementById('right-side-eq').className = 'flex items-end gap-0';
-            
-            // Átomo 1 (Na)
-            document.getElementById('lbl-1-title').innerText = 'Átomo de Sodio';
-            document.getElementById('core-1').innerText = 'Na';
-            document.getElementById('core-1').className = "w-10 h-10 rounded-full bg-slate-700/80 flex items-center justify-center text-xs font-bold text-slate-300 shadow-inner transition-colors duration-1000 z-10";
-            document.getElementById('atom-1').className = "w-[100px] h-[100px] rounded-full border border-slate-600 border-dashed flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000";
-            
-            // Fondo Bohr Na (2, 8)
-            const bgNa = createBohrBackground([2, 8], [], '#22c55e', '#4ade80', '#16a34a');
-            
-            // Átomo 2 (Cl)
-            document.getElementById('lbl-2-title').innerText = 'Átomo de Cloro';
-            document.getElementById('core-2').innerText = 'Cl';
-            document.getElementById('core-2').className = "w-10 h-10 rounded-full bg-red-600/30 flex items-center justify-center text-xs font-bold text-red-200 shadow-inner transition-colors duration-1000 z-10";
-            document.getElementById('atom-2').className = "w-[100px] h-[100px] rounded-full border border-slate-600 border-dashed flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000";
-            
-            // Fondo Bohr Cl (2, 8) y 7 electrones de valencia fijos en [-45, 0, 45, 90, 135, 180, 225] (dejando -90 libre)
-            const bgCl = createBohrBackground([2, 8], [-45, 0, 45, 90, 135, 180, 225], '#ef4444', '#f87171', '#dc2626');
+        document.getElementById('eq-l2-name').innerText = data.eq.l2Name;
+        document.getElementById('eq-l2-state').innerText = data.eq.l2State;
+        document.getElementById('eq-l2-state').className = `${data.eq.l2Color} text-[11px] font-bold mb-1 transition-colors duration-1000`;
 
-            // Inyectar SVGs en el panel central
-            injectBohrBg('atom-1', bgNa);
-            injectBohrBg('atom-2', bgCl);
-            
-            // Inyectar SVGs en el Panel 6
-            injectBohrBg('p6-l-atom-before', bgNa);
-            injectBohrBg('p6-r-atom-before', bgCl);
-            injectBohrBg('p6-l-atom-after', bgNa);
-            injectBohrBg('p6-r-atom-after', bgCl);
-            
-            // Solo 1 electrón visible
-            document.getElementById('electron-2').style.display = 'none';
-            document.getElementById('hole-2').style.display = 'none';
-            
-            // Textos del panel 3, 4, 5, 6, 7
-            document.getElementById('p3-l-title').innerText = 'SODIO';
-            document.getElementById('p3-r-title').innerText = 'CLORO';
-            document.getElementById('p3-l-start').innerText = '0';
-            document.getElementById('p3-l-end').className = 'text-green-400';
-            document.getElementById('p3-l-end').innerText = '+1';
-            document.getElementById('p3-l-desc').innerText = 'Pierde 1 electrón';
-            document.getElementById('p3-l-type').className = 'text-xs text-green-400 font-semibold mt-1';
-            document.getElementById('p3-r-start').className = 'text-slate-300';
-            document.getElementById('p3-r-start').innerText = '0';
-            document.getElementById('p3-r-end').className = 'text-red-400';
-            document.getElementById('p3-r-end').innerText = '-1';
-            document.getElementById('p3-r-desc').innerText = 'Gana 1 electrón';
-            document.getElementById('p3-r-type').className = 'text-xs text-red-400 font-semibold mt-1';
-            
-            document.getElementById('p4-ox').innerHTML = 'Na → <span class="text-green-400 font-bold">Na⁺ + 1e⁻</span>';
-            document.getElementById('p4-ox-mul').innerHTML = '(Balance: 2Na → <span class="text-green-400 font-bold">2Na⁺ + 2e⁻</span>)';
-            document.getElementById('p4-ox-mul').classList.remove('hidden');
-            
-            document.getElementById('p4-red').innerHTML = '<span class="text-red-400 font-bold">Cl₂ + 2e⁻</span> → 2Cl⁻';
-            document.getElementById('p4-red-mul').classList.add('hidden');
-            
-            document.getElementById('p5-ox').innerHTML = '<span class="font-bold text-red-400">Cl<sub class="text-[8px]">2</sub></span> <span class="text-slate-500 text-[10px] font-sans">(se reduce)</span>';
-            document.getElementById('p5-red').innerHTML = '<span class="font-bold text-green-400">Na</span> <span class="text-slate-500 text-[10px] font-sans">(se oxida)</span>';
-            
-            document.getElementById('p6-desc-l-before').innerText = 'Na tiene 1 e⁻ de valencia';
-            document.getElementById('p6-desc-l-before').className = 'text-green-400';
-            document.getElementById('p6-desc-r-before').innerText = 'Cl le falta 1 e⁻ para el octeto';
-            document.getElementById('p6-desc-r-before').className = 'text-red-400 mt-1';
-            document.getElementById('p6-desc-l-after').innerText = 'Na⁺ perdió 1 electrón';
-            document.getElementById('p6-desc-l-after').className = 'text-green-500';
-            document.getElementById('p6-desc-r-after').innerText = 'Cl⁻ ganó 1 electrón';
-            document.getElementById('p6-desc-r-after').className = 'text-red-500 mt-1';
-            
-            // Colores panel 6 (Na/Cl)
-            document.getElementById('p6-l-title-before').innerText = 'Átomo de Sodio';
-            document.getElementById('p6-l-core-before').innerText = 'Na';
-            document.getElementById('p6-l-core-before').className = 'w-6 h-6 rounded-full bg-slate-600 shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white';
-            document.getElementById('p6-r-title-before').innerText = 'Átomo de Cloro';
-            document.getElementById('p6-r-core-before').innerText = 'Cl';
-            document.getElementById('p6-r-core-before').className = 'w-6 h-6 rounded-full bg-red-600 shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white';
-            
-            document.getElementById('p6-l-e1').style.display = 'block';
-            document.getElementById('p6-l-e2').style.display = 'none';
-            document.getElementById('p6-l-e3').style.display = 'none';
-            document.getElementById('p6-l-e4').style.display = 'none';
+        document.getElementById('eq-r1-name').innerText = data.eq.r1Name;
+        document.getElementById('eq-r1-state').innerText = data.eq.r1State;
+        document.getElementById('eq-r1-state').className = `${data.eq.r1Color} text-[11px] font-bold mb-1 transition-colors duration-1000`;
 
-            document.getElementById('p6-l-title-after').innerText = 'Ion de Sodio';
-            document.getElementById('p6-l-core-after').innerText = 'Na';
-            document.getElementById('p6-l-core-after').className = 'w-6 h-6 rounded-full bg-green-500 shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white';
-            document.getElementById('p6-r-title-after').innerText = 'Ion de Cloro';
-            document.getElementById('p6-r-core-after').innerText = 'Cl';
-            document.getElementById('p6-r-core-after').className = 'w-6 h-6 rounded-full bg-red-500 shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white';
-            
-            document.getElementById('p6-r-e1').style.display = 'block';
-            document.getElementById('p6-r-e2').style.display = 'none';
-            document.getElementById('p6-r-e3').style.display = 'none';
-            document.getElementById('p6-r-e4').style.display = 'none';
-            
-            document.getElementById('p7-desc').style.display = 'block';
-            document.getElementById('p7-lost').innerHTML = '2 &times; 1e⁻ = 2e⁻';
-            document.getElementById('p7-lost').className = 'text-green-500 font-bold text-sm md:text-base';
-            document.getElementById('p7-gained').innerHTML = '1 &times; 2e⁻ = 2e⁻';
-            document.getElementById('p7-gained').className = 'text-red-500 font-bold text-sm md:text-base';
+        document.getElementById('eq-r2-name').innerText = data.eq.r2Name;
+        document.getElementById('eq-r2-state').innerText = data.eq.r2State;
+        document.getElementById('eq-r2-state').className = `${data.eq.r2Color} text-[11px] font-bold mb-1 transition-colors duration-1000`;
+
+        document.getElementById('eq-plus-right').style.display = data.eq.showPlusRight ? 'inline' : 'none';
+        document.getElementById('right-side-eq').className = data.eq.showPlusRight ? 'flex items-end gap-2 md:gap-6' : 'flex items-end gap-0';
+
+        // Panel 2: Atomos de Bohr
+        document.getElementById('lbl-1-title').innerText = data.left.titleBefore;
+        document.getElementById('core-1').innerText = data.left.symbol;
+        document.getElementById('core-1').className = `w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-inner transition-colors duration-1000 z-10 ${data.left.coreColorStart}`;
+        document.getElementById('lbl-1-state').innerText = data.left.stateStart;
+        document.getElementById('lbl-1-state').className = `mt-4 font-bold text-lg transition-colors duration-1000 ${data.left.stateColorStart}`;
+        const atom1 = document.getElementById('atom-1');
+        const b1 = data.left.hideBorder ? 'border-0' : 'border border-dashed';
+        atom1.className = `w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] rounded-full ${b1} flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000 ${data.left.atomBorderStart}`;
+
+        document.getElementById('lbl-2-title').innerText = data.right.titleBefore;
+        document.getElementById('core-2').innerText = data.right.coreSymbolBefore;
+        document.getElementById('core-2').className = `w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-inner transition-colors duration-1000 z-10 ${data.right.coreColorStart}`;
+        document.getElementById('lbl-2-state').innerText = data.right.stateStart;
+        document.getElementById('lbl-2-state').className = `mt-4 font-bold text-lg transition-colors duration-1000 ${data.right.stateColorStart}`;
+        const atom2 = document.getElementById('atom-2');
+        const b2 = data.right.hideBorder ? 'border-0' : 'border border-dashed';
+        atom2.className = `w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] rounded-full ${b2} flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000 ${data.right.atomBorderStart}`;
+
+        const atom3 = document.getElementById('atom-3');
+        if (reactionId === 'mg-f2') {
+            atom3.classList.remove('hidden');
+            document.getElementById('core-3').innerText = data.right.coreSymbolBefore;
+            document.getElementById('core-3').className = `w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-inner transition-colors duration-1000 z-10 ${data.right.coreColorStart}`;
+            atom3.className = `w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] rounded-full ${b2} flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000 ${data.right.atomBorderStart}`;
+        } else {
+            if (atom3) atom3.className = 'hidden';
         }
+
+        const bg1 = createBohrBackground(data.left.shells, data.left.staticElectrons, data.left.bgColor, data.left.elColor, data.left.elStroke);
+        const bg2 = createBohrBackground(data.right.shells, data.right.staticElectrons, data.right.bgColor, data.right.elColor, data.right.elStroke);
+        injectBohrBg('atom-1', bg1);
+        injectBohrBg('atom-2', bg2);
+        if (reactionId === 'mg-f2') {
+            injectBohrBg('atom-3', bg2);
+        }
+
+        injectBohrBg('p6-l-atom-before', bg1);
+        injectBohrBg('p6-r-atom-before', bg2);
+        injectBohrBg('p6-l-atom-after', bg1);
+        injectBohrBg('p6-r-atom-after', bg2);
+
+        // Limpiar elementos de transferencia previos de todo el DOM
+        document.querySelectorAll('.transfer-wrapper, .transfer-electron, .transfer-hole, .p6-transfer-electron').forEach(el => el.remove());
+
+        for (let i = 0; i < data.transfer.length; i++) {
+            const t = data.transfer[i];
+
+            // Origen rotatorio
+            const startSpinClass = data.left.shells.length % 2 === 0 ? 'spin-slow' : 'spin-slow-reverse';
+            const eWrapper = document.createElement('div');
+            eWrapper.className = `transfer-wrapper absolute inset-0 w-full h-full pointer-events-none ${startSpinClass}`;
+            atom1.appendChild(eWrapper);
+
+            const e = document.createElement('div');
+            e.className = `transfer-electron absolute rounded-full z-50 transition-all duration-1000 ease-in-out`;
+            e.style.backgroundColor = data.left.elColor;
+            e.style.width = '12px';
+            e.style.height = '12px';
+            e.style.boxShadow = '0 0 8px rgba(255,255,255,0.8)';
+            e.id = `electron-${i + 1}`;
+            const sAngle = t.startAngle !== undefined ? t.startAngle : t.angle;
+            const startLeft = (t.startR * Math.cos(sAngle)).toFixed(2);
+            const startTop = (t.startR * Math.sin(sAngle)).toFixed(2);
+            e.style.left = `${50 + parseFloat(startLeft)}%`;
+            e.style.top = `${50 + parseFloat(startTop)}%`;
+            e.style.transform = 'translate(-50%, -50%)';
+            eWrapper.appendChild(e);
+
+            // Destino rotatorio (sincronizado con el SVG)
+            const targetId = t.targetId || 'atom-2';
+            const targetAtom = document.getElementById(targetId);
+
+            const endSpinClass = t.endIdx % 2 === 0 ? 'spin-slow' : 'spin-slow-reverse';
+            const hWrapper = document.createElement('div');
+            hWrapper.className = `transfer-wrapper absolute inset-0 w-full h-full pointer-events-none ${endSpinClass}`;
+            hWrapper.id = `hWrapper-${i + 1}`;
+            targetAtom.appendChild(hWrapper);
+
+            const h = document.createElement('div');
+            h.className = `transfer-hole absolute border border-slate-400 rounded-full z-50 transition-opacity duration-1000`;
+            h.style.width = '12px';
+            h.style.height = '12px';
+            h.id = `hole-${i + 1}`;
+            const hLeft = (t.endR * Math.cos(t.angle)).toFixed(2);
+            const hTop = (t.endR * Math.sin(t.angle)).toFixed(2);
+            h.style.left = `${50 + parseFloat(hLeft)}%`;
+            h.style.top = `${50 + parseFloat(hTop)}%`;
+            h.style.transform = 'translate(-50%, -50%)';
+            hWrapper.appendChild(h);
+
+            // Panel 6 origen
+            const p6wrapper1 = document.createElement('div');
+            p6wrapper1.className = `transfer-wrapper absolute inset-0 w-full h-full pointer-events-none ${startSpinClass}`;
+            document.getElementById('p6-l-atom-before').appendChild(p6wrapper1);
+
+            const p6e = document.createElement('div');
+            p6e.className = `p6-transfer-electron absolute rounded-full`;
+            p6e.style.width = '8px';
+            p6e.style.height = '8px';
+            p6e.style.backgroundColor = data.left.elColor;
+            const sAngle2 = t.startAngle !== undefined ? t.startAngle : t.angle;
+            p6e.style.left = `${50 + parseFloat((t.startR * Math.cos(sAngle2)).toFixed(2))}%`;
+            p6e.style.top = `${50 + parseFloat((t.startR * Math.sin(sAngle2)).toFixed(2))}%`;
+            p6e.style.transform = 'translate(-50%, -50%)';
+            p6wrapper1.appendChild(p6e);
+
+            // Panel 6 destino rotatorio
+            const p6wrapper2 = document.createElement('div');
+            p6wrapper2.className = `transfer-wrapper absolute inset-0 w-full h-full pointer-events-none ${endSpinClass}`;
+            document.getElementById('p6-r-atom-after').appendChild(p6wrapper2);
+
+            const p6e2 = document.createElement('div');
+            p6e2.className = `p6-transfer-electron absolute rounded-full hidden`;
+            p6e2.style.width = '8px';
+            p6e2.style.height = '8px';
+            p6e2.style.backgroundColor = data.left.elColor;
+            const p6endLeft = (t.endR * Math.cos(t.angle)).toFixed(2);
+            const p6endTop = (t.endR * Math.sin(t.angle)).toFixed(2);
+            p6e2.style.left = `${50 + parseFloat(p6endLeft)}%`;
+            p6e2.style.top = `${50 + parseFloat(p6endTop)}%`;
+            p6e2.style.transform = 'translate(-50%, -50%)';
+            p6wrapper2.appendChild(p6e2);
+        }
+
+        // Panel 3
+        document.getElementById('p3-l-title').innerText = data.panel3.lTitle;
+        document.getElementById('p3-l-start').innerText = data.left.stateStart;
+        document.getElementById('p3-l-end').innerText = data.left.stateEnd;
+        document.getElementById('p3-l-end').className = data.panel3.lTypeColor;
+        document.getElementById('p3-l-desc').innerText = data.panel3.lDesc;
+        document.getElementById('p3-l-type').className = `text-xs font-semibold mt-1.5 ${data.panel3.lTypeColor}`;
+        document.getElementById('p3-l-type').innerText = data.panel3.lType;
+
+        document.getElementById('p3-r-title').innerText = data.panel3.rTitle;
+        document.getElementById('p3-r-start').innerText = data.right.stateStart;
+        document.getElementById('p3-r-start').className = 'text-slate-300';
+        document.getElementById('p3-r-end').innerText = data.right.stateEnd;
+        document.getElementById('p3-r-end').className = data.panel3.rTypeColor;
+        document.getElementById('p3-r-desc').innerText = data.panel3.rDesc;
+        document.getElementById('p3-r-type').className = `text-xs font-semibold mt-1.5 ${data.panel3.rTypeColor}`;
+        document.getElementById('p3-r-type').innerText = data.panel3.rType;
+
+        // Panel 4
+        document.getElementById('p4-ox').innerHTML = data.panel4.ox;
+        const p4oxmul = document.getElementById('p4-ox-mul');
+        if (data.panel4.oxMul) { p4oxmul.innerHTML = data.panel4.oxMul; p4oxmul.classList.remove('hidden'); } else p4oxmul.classList.add('hidden');
+
+        document.getElementById('p4-red').innerHTML = data.panel4.red;
+        const p4redmul = document.getElementById('p4-red-mul');
+        if (data.panel4.redMul) { p4redmul.innerHTML = data.panel4.redMul; p4redmul.classList.remove('hidden'); } else p4redmul.classList.add('hidden');
+
+        // Panel 5
+        document.getElementById('p5-ox').innerHTML = data.panel5.ox;
+        document.getElementById('p5-red').innerHTML = data.panel5.red;
+
+        // Panel 6 Textos
+        document.getElementById('p6-l-title-before').innerText = data.left.titleBefore;
+        document.getElementById('p6-l-core-before').innerText = data.left.symbol;
+        document.getElementById('p6-l-core-before').className = `w-6 h-6 rounded-full shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white ${data.left.coreColorStart}`;
+
+        document.getElementById('p6-r-title-before').innerText = data.right.titleBefore;
+        document.getElementById('p6-r-core-before').innerText = data.right.coreSymbolBefore;
+        document.getElementById('p6-r-core-before').className = `w-6 h-6 rounded-full shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white ${data.right.coreColorStart}`;
+
+        document.getElementById('p6-l-title-after').innerText = data.left.titleAfter;
+        document.getElementById('p6-l-core-after').innerText = data.left.symbol;
+
+        document.getElementById('p6-r-title-after').innerText = data.right.titleAfter;
+        document.getElementById('p6-r-core-after').innerText = data.right.coreSymbolAfter;
+
+        document.getElementById('p6-desc-l-before').innerText = data.left.descBefore;
+        document.getElementById('p6-desc-l-before').className = data.left.stateColorStart;
+        document.getElementById('p6-desc-r-before').innerText = data.right.descBefore;
+        document.getElementById('p6-desc-r-before').className = `${data.right.stateColorStart} mt-1`;
+
+        document.getElementById('p6-desc-l-after').innerText = data.left.descAfter;
+        document.getElementById('p6-desc-l-after').className = data.left.stateColorEnd;
+        document.getElementById('p6-desc-r-after').innerText = data.right.descAfter;
+        document.getElementById('p6-desc-r-after').className = `${data.right.stateColorEnd} mt-1`;
+
+        // Panel 7
+        const p7desc = document.getElementById('p7-desc');
+        if (data.panel7.desc) { p7desc.innerHTML = data.panel7.desc; p7desc.style.display = 'block'; } else p7desc.style.display = 'none';
+
+        document.getElementById('p7-lost').innerHTML = data.panel7.lost;
+        document.getElementById('p7-lost').className = data.panel7.lostTextCls;
+        document.getElementById('p7-gained').innerHTML = data.panel7.gained;
+        document.getElementById('p7-gained').className = data.panel7.gainedTextCls;
     };
 
-    btnZn.addEventListener('click', () => setReaction('zn-cu'));
-    btnNa.addEventListener('click', () => setReaction('na-cl'));
+    document.getElementById('btn-react-zn')?.addEventListener('click', () => setReaction('zn-cu'));
+    document.getElementById('btn-react-na')?.addEventListener('click', () => setReaction('na-cl'));
+    document.getElementById('btn-react-fe-cu')?.addEventListener('click', () => setReaction('fe-cu'));
 
     // Configuración inicial
     setReaction('zn-cu');
@@ -433,135 +743,196 @@ document.addEventListener('DOMContentLoaded', () => {
         if (reaccionIniciada) return;
         reaccionIniciada = true;
 
-        // 1. Deshabilitar botón
         btnIniciar.disabled = true;
         btnIniciar.classList.add('opacity-50', 'cursor-not-allowed');
         btnIniciar.innerHTML = "REACCIÓN EN PROCESO...";
 
-        // 2. Iniciar Transferencia de Electrones (Paso 2)
         setActiveStep(2);
 
-        const e1 = document.getElementById('electron-1');
-        const e2 = document.getElementById('electron-2');
-        const hole1 = document.getElementById('hole-1');
-        const hole2 = document.getElementById('hole-2');
+        const data = REACTIONS_CATALOG[currentReaction];
         const container = document.getElementById('anim-container');
-        
-        // FASE 1: Iniciar viaje
-        e1.classList.add('electrified');
-        if(currentReaction === 'zn-cu') e2.classList.add('electrified');
+        const containerRect = container.getBoundingClientRect();
 
-        let sparkInterval = setInterval(() => {
-            const rectE1 = e1.getBoundingClientRect();
-            for(let i=0; i<2; i++) {
-                const s1 = createSpark(container, rectE1, true);
-                setTimeout(() => { if(s1 && s1.parentNode) s1.remove(); }, 100);
+        // Preparar electrones (FLIP)
+        for (let i = 1; i <= data.transfer.length; i++) {
+            const eEl = document.getElementById(`electron-${i}`);
+            if (eEl) {
+                eEl.classList.add('electrified');
+                const rectE = eEl.getBoundingClientRect();
+
+                // Mover a anim-container
+                container.appendChild(eEl);
+                eEl.style.transition = 'none';
+                eEl.style.left = `${rectE.left - containerRect.left + rectE.width / 2}px`;
+                eEl.style.top = `${rectE.top - containerRect.top + rectE.height / 2}px`;
+                eEl.style.transform = 'translate(-50%, -50%)';
+
+                // Forzar reflow
+                eEl.getBoundingClientRect();
             }
-            
-            if (currentReaction === 'zn-cu') {
-                const rectE2 = e2.getBoundingClientRect();
-                for(let i=0; i<2; i++) {
-                    const s2 = createSpark(container, rectE2, true);
-                    setTimeout(() => { if(s2 && s2.parentNode) s2.remove(); }, 100);
+        }
+
+        setTimeout(() => {
+            document.getElementById('lbl-1-title').className = `mb-3 text-lg font-semibold text-slate-500 transition-colors duration-1000 text-center whitespace-nowrap`;
+            document.getElementById('lbl-2-title').className = `mb-3 text-lg font-semibold text-slate-500 transition-colors duration-1000 text-center whitespace-nowrap`;
+        }, 50);
+
+        // Disparar animación hacia los huecos dinámicos usando rAF
+        let startAnimTime = null;
+        const animDuration = 1000;
+        
+        const movingElectrons = [];
+        for (let i = 1; i <= data.transfer.length; i++) {
+            const eEl = document.getElementById(`electron-${i}`);
+            const hEl = document.getElementById(`hole-${i}`);
+            if (eEl && hEl) movingElectrons.push({ eEl, hEl, i });
+        }
+
+        const animateFlight = (timestamp) => {
+            if (!reaccionIniciada) return;
+            if (!startAnimTime) startAnimTime = timestamp;
+            let progress = (timestamp - startAnimTime) / animDuration;
+            if (progress > 1) progress = 1;
+
+            const ease = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+
+            movingElectrons.forEach(({ eEl, hEl }) => {
+                if (eEl._startLeft === undefined) {
+                    eEl._startLeft = parseFloat(eEl.style.left);
+                    eEl._startTop = parseFloat(eEl.style.top);
+                }
+
+                const rectH = hEl.getBoundingClientRect();
+                const currentContainerRect = container.getBoundingClientRect();
+                const targetLeft = rectH.left - currentContainerRect.left + rectH.width / 2;
+                const targetTop = rectH.top - currentContainerRect.top + rectH.height / 2;
+
+                eEl.style.left = `${eEl._startLeft + (targetLeft - eEl._startLeft) * ease}px`;
+                eEl.style.top = `${eEl._startTop + (targetTop - eEl._startTop) * ease}px`;
+            });
+
+            if (progress < 1) currentAnimFrame = requestAnimationFrame(animateFlight);
+        };
+        currentAnimFrame = requestAnimationFrame(animateFlight);
+
+        currentSparkInterval = setInterval(() => {
+            for (let i = 1; i <= data.transfer.length; i++) {
+                const eEl = document.getElementById(`electron-${i}`);
+                if (eEl) {
+                    const rect = eEl.getBoundingClientRect();
+                    for (let j = 0; j < 2; j++) {
+                        const s = createSpark(container, rect, true);
+                        setTimeout(() => { if (s && s.parentNode) s.remove(); }, 100);
+                    }
                 }
             }
         }, 50);
 
-        const rectE1 = e1.getBoundingClientRect();
-        const rectH1 = hole1.getBoundingClientRect();
-        e1.style.transform = `translate(calc(-50% + ${rectH1.left - rectE1.left}px), calc(-50% + ${rectH1.top - rectE1.top}px))`;
+        currentTimeout = setTimeout(() => {
+            clearInterval(currentSparkInterval);
 
-        if (currentReaction === 'zn-cu') {
-            const rectE2 = e2.getBoundingClientRect();
-            const rectH2 = hole2.getBoundingClientRect();
-            e2.style.transform = `translate(calc(-50% + ${rectH2.left - rectE2.left}px), calc(50% + ${rectH2.top - rectE2.top}px))`;
-        }
+            // Actualizar Left Atom (Panel 2)
+            document.getElementById('core-1').className = `w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-inner transition-colors duration-1000 z-10 ${data.left.coreColorEnd}`;
+            document.getElementById('core-1').innerText = data.left.coreSymbolAfter;
+            document.getElementById('atom-1').className = `w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] rounded-full border border-dashed flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000 ${data.left.atomBorderEnd}`;
+            document.getElementById('lbl-1-title').innerText = data.left.titleAfter;
+            document.getElementById('lbl-1-state').innerText = data.left.stateEnd;
+            document.getElementById('lbl-1-state').className = `mt-4 font-bold text-lg transition-colors duration-1000 ${data.left.stateColorEnd}`;
+            document.getElementById('eq-l1-state').className = `${data.left.stateColorEnd} text-[11px] font-bold mb-1 transition-colors duration-1000`;
 
-        // FASE 2: Finalizar
-        setTimeout(() => {
-            clearInterval(sparkInterval);
+            // Actualizar Right Atom (Panel 2)
+            document.getElementById('core-2').className = `w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-inner transition-colors duration-1000 z-10 ${data.right.coreColorEnd}`;
+            document.getElementById('core-2').innerText = data.right.coreSymbolAfter;
+            document.getElementById('atom-2').className = `w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] rounded-full border border-dashed flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000 ${data.right.atomBorderEnd}`;
             
-            if (currentReaction === 'zn-cu') {
-                document.getElementById('core-1').classList.replace('bg-slate-700/80', 'bg-red-600');
-                document.getElementById('core-1').innerText = 'Zn²⁺';
-                document.getElementById('atom-1').classList.replace('border-slate-600', 'border-red-500/50');
-                document.getElementById('lbl-1-title').innerText = 'Ion de Zinc';
-                
-                document.getElementById('lbl-1-state').innerText = '+2';
-                document.getElementById('lbl-1-state').classList.replace('text-blue-400', 'text-red-400');
-                document.getElementById('eq-l1-state').classList.replace('text-blue-400', 'text-red-400');
-                
-                document.getElementById('eq-r1-state').innerText = '+2';
-                document.getElementById('eq-r1-state').classList.replace('text-slate-600', 'text-red-400');
-                document.getElementById('eq-r1-name').classList.replace('text-slate-500', 'text-slate-200');
-                
-                document.getElementById('core-2').classList.replace('bg-blue-600/30', 'bg-orange-500');
-                document.getElementById('core-2').innerText = 'Cu';
-                document.getElementById('atom-2').classList.replace('border-slate-600', 'border-orange-500/50');
-                document.getElementById('lbl-2-title').innerText = 'Átomo de Cobre';
-                document.getElementById('lbl-2-state').innerText = '0';
-                document.getElementById('lbl-2-state').classList.replace('text-blue-400', 'text-slate-300');
-                document.getElementById('eq-l2-state').classList.replace('text-blue-400', 'text-slate-300');
-                
-                document.getElementById('eq-r2-state').innerText = '0';
-                document.getElementById('eq-r2-state').classList.replace('text-slate-600', 'text-slate-300');
-                document.getElementById('eq-r2-name').classList.replace('text-slate-500', 'text-slate-200');
-            } else {
-                // Na-Cl update
-                document.getElementById('core-1').classList.replace('bg-slate-700/80', 'bg-green-500');
-                document.getElementById('core-1').innerText = 'Na⁺';
-                document.getElementById('atom-1').classList.replace('border-slate-600', 'border-green-500/50');
-                document.getElementById('lbl-1-title').innerText = 'Ion de Sodio';
-                
-                document.getElementById('lbl-1-state').innerText = '+1';
-                document.getElementById('lbl-1-state').classList.replace('text-blue-400', 'text-green-400');
-                document.getElementById('eq-l1-state').classList.replace('text-blue-400', 'text-green-400');
-                
-                document.getElementById('eq-r1-state').innerText = '+1';
-                document.getElementById('eq-r1-state').classList.replace('text-slate-600', 'text-green-400');
-                document.getElementById('eq-r1-name').classList.replace('text-slate-500', 'text-slate-200');
-                
-                document.getElementById('core-2').classList.replace('bg-red-600/30', 'bg-red-500');
-                document.getElementById('core-2').innerText = 'Cl⁻';
-                document.getElementById('atom-2').classList.replace('border-slate-600', 'border-red-500/50');
-                document.getElementById('lbl-2-title').innerText = 'Ion de Cloro';
-                document.getElementById('lbl-2-state').innerText = '-1';
-                document.getElementById('lbl-2-state').classList.replace('text-blue-400', 'text-red-400');
-                document.getElementById('eq-l2-state').classList.replace('text-blue-400', 'text-red-400');
-                
-                document.getElementById('eq-r2-state').innerText = '-1';
-                document.getElementById('eq-r2-state').classList.replace('text-slate-600', 'text-red-400');
-                document.getElementById('eq-r2-name').classList.replace('text-slate-500', 'text-slate-200');
+            if (currentReaction === 'mg-f2') {
+                const atom3 = document.getElementById('atom-3');
+                document.getElementById('core-3').className = `w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-inner transition-colors duration-1000 z-10 ${data.right.coreColorEnd}`;
+                document.getElementById('core-3').innerText = data.right.coreSymbolAfter;
+                atom3.className = `w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] rounded-full border border-dashed flex items-center justify-center relative shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-colors duration-1000 ${data.right.atomBorderEnd}`;
             }
 
-            e1.classList.remove('electrified');
-            e2.classList.remove('electrified');
-            hole1.style.opacity = '0';
-            hole2.style.opacity = '0';
+            document.getElementById('lbl-2-title').innerText = data.right.titleAfter;
+            document.getElementById('lbl-2-state').innerText = data.right.stateEnd;
+            document.getElementById('lbl-2-state').className = `mt-4 font-bold text-lg transition-colors duration-1000 ${data.right.stateColorEnd}`;
+            document.getElementById('eq-l2-state').className = `${data.right.stateColorEnd} text-[11px] font-bold mb-1 transition-colors duration-1000`;
 
-            // 3. Revelar Panel 3 (Paso 3)
-            setTimeout(() => {
+            document.getElementById('eq-r1-state').className = `${data.eq.r1Color} text-[11px] font-bold mb-1 transition-colors duration-1000`;
+            document.getElementById('eq-r1-name').className = `text-slate-200 transition-colors duration-1000`;
+
+            document.getElementById('eq-r2-state').className = `${data.eq.r2Color} text-[11px] font-bold mb-1 transition-colors duration-1000`;
+            document.getElementById('eq-r2-name').className = `text-slate-200 transition-colors duration-1000`;
+
+            // Actualizar Panel 6 colores finales y electrones
+            document.getElementById('p6-l-core-after').className = `w-6 h-6 rounded-full shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white ${data.left.coreColorEnd}`;
+            document.getElementById('p6-r-core-after').className = `w-6 h-6 rounded-full shadow-inner z-10 flex items-center justify-center text-[8px] font-bold text-white ${data.right.coreColorEnd}`;
+
+            document.getElementById('p6-r-atom-after').querySelectorAll('.p6-transfer-electron').forEach(el => el.classList.remove('hidden'));
+
+            for (let i = 1; i <= data.transfer.length; i++) {
+                const eEl = document.getElementById(`electron-${i}`);
+                const hEl = document.getElementById(`hole-${i}`);
+                if (eEl) eEl.classList.remove('electrified');
+                if (hEl) hEl.style.opacity = '0';
+
+                if (eEl) {
+                    const t = data.transfer[i - 1];
+                    const hWrapper = document.getElementById(`hWrapper-${i}`);
+                    if (hWrapper) {
+                        const freshE = document.createElement('div');
+                        freshE.className = `absolute rounded-full z-50`;
+                        freshE.style.width = '12px';
+                        freshE.style.height = '12px';
+                        freshE.style.boxShadow = '0 0 8px rgba(255,255,255,0.8)';
+                        freshE.style.backgroundColor = data.right.elColor;
+                        
+                        const endLeft = (t.endR * Math.cos(t.angle)).toFixed(2);
+                        const endTop = (t.endR * Math.sin(t.angle)).toFixed(2);
+                        freshE.style.left = `${50 + parseFloat(endLeft)}%`;
+                        freshE.style.top = `${50 + parseFloat(endTop)}%`;
+                        freshE.style.transform = 'translate(-50%, -50%)';
+                        
+                        hWrapper.appendChild(freshE);
+                        eEl.remove();
+                    }
+                }
+            }
+
+            currentTimeout = setTimeout(() => {
                 setActiveStep(3);
                 revealPanel('panel3');
 
-                setTimeout(() => {
+                currentTimeout = setTimeout(() => {
                     setActiveStep(4);
                     revealPanel('panel4');
 
-                    setTimeout(() => {
+                    currentTimeout = setTimeout(() => {
                         setActiveStep(5);
                         revealPanel('panel5');
 
-                        setTimeout(() => {
+                        currentTimeout = setTimeout(() => {
                             setActiveStep(6);
                             revealPanel('panel6');
-                            revealPanel('panel7');
 
-                            btnIniciar.innerHTML = "REACCIÓN COMPLETADA";
+                            currentTimeout = setTimeout(() => {
+                                setActiveStep(7);
+                                revealPanel('panel7');
+
+                                btnIniciar.innerHTML = "REACCIÓN COMPLETADA";
+                            }, 1200);
                         }, 1200);
                     }, 1200);
                 }, 1200);
             }, 1000);
         }, 1000);
     });
+
+    document.getElementById('btn-react-zn')?.addEventListener('click', () => setReaction('zn-cu'));
+    document.getElementById('btn-react-na')?.addEventListener('click', () => setReaction('na-cl'));
+    document.getElementById('btn-react-fe-cu')?.addEventListener('click', () => setReaction('fe-cu'));
+    document.getElementById('btn-react-mg-o2')?.addEventListener('click', () => setReaction('mg-o2'));
+    document.getElementById('btn-react-cu-cl2')?.addEventListener('click', () => setReaction('cu-cl2'));
+    document.getElementById('btn-react-mg-f2')?.addEventListener('click', () => setReaction('mg-f2'));
+
+    // Configuración inicial
 });
